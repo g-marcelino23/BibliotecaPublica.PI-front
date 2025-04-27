@@ -38,13 +38,6 @@ function CadastroLivro() {
           required
         />
 
-        <label>Descrição</label>
-        <textarea
-          value={descricao}
-          onChange={(e) => setDescricao(e.target.value)}
-          required
-        />
-
         <label>Arquivo PDF</label>
         <input
           type="file"
