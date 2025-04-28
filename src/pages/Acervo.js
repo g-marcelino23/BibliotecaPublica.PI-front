@@ -3,6 +3,7 @@ import '../styles/Acervo.css';
 import capa1 from '../assets/capas/capa1.jpg';
 import capa2 from '../assets/capas/capa2.jpg';
 import capa3 from '../assets/capas/capa3.jpg';
+import { Link } from 'react-router-dom';
 // adicione quantas quiser
 
 function Acervo() {
@@ -15,13 +16,20 @@ function Acervo() {
   return (
     <div className="acervo-container">
       <h2 className="acervo-titulo">VEJA ALGUNS LIVROS DISPONÍVEIS</h2>
+      <div className="Button">
+        <Link to="/cadastro-livros">
+          <button type="button" class="btn btn-primary">Cadastrar Livro</button>
+        </Link>
+      </div>
       <div className="livros-grid">
         {livros.map((livro) => (
           <div key={livro.id} className="livro-card">
             <img src={livro.imagem} alt={livro.titulo} className="livro-capa" />
           </div>
         ))}
-      </div>
+      </div> 
+      
+      
     </div>
   );
 }

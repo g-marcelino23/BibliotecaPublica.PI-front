@@ -42,3 +42,20 @@
     object-fit: cover;
   }
   
+  .acervo-container button{
+    margin-top: 30px;
+    width: 300px;
+    padding: 12px;
+    background-color: #6c3e19;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-bottom: 1.3rem;
+  }
+
+  .acervo-container button:hover {
+    background-color: #8a5123;
+  }
