@@ -4,7 +4,7 @@ import api from '../services/api.js';
 import Tabela from './Tabela';
 
 function CadastroLivro() {
-
+  const token = localStorage.getItem('token');
   const livro = {
     autor : '',
     descricao : '',
@@ -19,7 +19,11 @@ function CadastroLivro() {
 
   const getLivros = async () => {
     try {
-      const response = await api.get("/all");
+      const response = await api.get("/all", {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
       const data = response.data;
       setLivros(data);
     } catch (error) {
@@ -58,6 +62,7 @@ function CadastroLivro() {
     try {
       const response = await api.post("/cadastrar", formData, {
         headers: {
+          Authorization: `Bearer ${token}`,
           'Content-Type': 'multipart/form-data',
         }
       });
@@ -94,6 +99,7 @@ const alterarLivro = async (e) => {
   try {
     const response = await api.put(`/alterar/${objLivro.id}`, formData, {
       headers: {
+        Authorization: `Bearer ${token}`,
         'Content-Type': 'multipart/form-data',
       }
     });
@@ -115,7 +121,13 @@ const alterarLivro = async (e) => {
 const excluirLivro = async (e) => {
   e.preventDefault();
   try {
-    const response = await api.delete(`/deletar/${objLivro.id}`);
+    const response = await api.delete(`/deletar/${objLivro.id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
+    );
     alert("Livro excluído com sucesso!");
 
     let arrayTemp = [...livros];

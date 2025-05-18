@@ -22,7 +22,7 @@ const LoginUsuario = () => {
       const { token, name: userName } = response.data;
       localStorage.setItem('token', token);
       localStorage.setItem('userName', userName);
-      navigate('/dashboard');
+      navigate('/acervo');
     } catch (err) {
       setError('E-mail ou senha inválidos.');
     }

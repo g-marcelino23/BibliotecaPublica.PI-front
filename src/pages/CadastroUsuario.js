@@ -24,9 +24,20 @@ const CadastroUsuario = () => {
       const { token, name: userName } = response.data;
       localStorage.setItem('token', token);
       localStorage.setItem('userName', userName);
-      navigate('/dashboard');
+      navigate('/acervo');
     } catch (err) {
-      setError('Erro ao registrar. Verifique os dados e tente novamente.');
+      console.error('Erro na requisição:', err);
+
+      if (err.response) {
+        console.error('Resposta da API:', err.response.data);
+        setError(err.response.data.message || 'Erro ao registrar. Verifique os dados e tente novamente.');
+      } else if (err.request) {
+        console.error('Sem resposta da API:', err.request);
+        setError('Servidor não respondeu. Verifique a conexão.');
+      } else {
+        console.error('Erro desconhecido:', err.message);
+        setError('Erro inesperado. Tente novamente.');
+      }
     }
   };
 
