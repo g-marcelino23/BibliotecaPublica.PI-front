@@ -1,0 +1,74 @@
+.cadastro-livro-container {
+    max-width: 600px;
+    margin: 50px auto;
+    background: #fffaf5;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    font-family: 'Lora', serif;
+  }
+  
+  .cadastro-titulo {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 2rem;
+    color: #4a2e1f;
+  }
+  
+  .cadastro-form label {
+    display: block;
+    margin-top: 20px;
+    font-weight: bold;
+    color: #5b3a2c;
+  }
+  
+  .cadastro-form input,
+  .cadastro-form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 8px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    font-family: inherit;
+  }
+  
+  .cadastro-form textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+  
+  .cadastro-form button {
+    margin-top: 30px;
+    width: 100%;
+    padding: 12px;
+    background-color: #6c3e19;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  .cadastro-form button:hover {
+    background-color: #8a5123;
+  }
+
+  .cadastro-form input[type="button"]{
+    margin-top: 30px;
+    width: 100%;
+    padding: 12px;
+    background-color: #6c3e19;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  .cadastro-form input[type="button"]:hover {
+    background-color: #8a5123;
+  }
+  
