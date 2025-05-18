@@ -14,8 +14,9 @@ function Home() {
       <div className="overlay">
         <h1 className="home-title">BIBLIOTECA PÚBLICA ONLINE</h1>
         <div className="home-buttons">
-          <Link to="/login" className="btn btn-outline-light btn-lg">Login</Link>
-          <Link to="/cadastro" className="btn btn-outline-light btn-lg">Cadastre-se</Link>
+
+          <Link to="/login-usuario" className="btn btn-outline-light btn-lg">Login</Link>
+          <Link to="/cadastro-usuario" className="btn btn-outline-light btn-lg">Cadastre-se</Link>
           <Link to="/acervo" className="btn btn-outline-light btn-lg">Acessar Acervo</Link>
         </div>
       </div>
