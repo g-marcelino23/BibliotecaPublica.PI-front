@@ -1,0 +1,372 @@
+/* Reset básico para fontes e box-sizing */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.dashboard-container {
+  display: flex;
+  height: 100vh;
+  background: #f9faff;
+  color: #333;
+}
+
+/* SIDEBAR */
+.sidebar {
+  width: 250px;
+  background: linear-gradient(180deg, #4a90e2, #357ABD);
+  color: white;
+  padding: 30px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  box-shadow: 3px 0 15px rgba(53, 122, 189, 0.3);
+  border-radius: 0 20px 20px 0;
+}
+
+.sidebar h4 {
+  font-weight: 700;
+  font-size: 1.8rem;
+  margin-bottom: 40px;
+  letter-spacing: 1.2px;
+  user-select: none;
+}
+
+.sidebar .nav-link {
+  color: white;
+  margin-bottom: 18px;
+  font-weight: 600;
+  font-size: 1.1rem;
+  padding: 8px 12px;
+  border-radius: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.sidebar .nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.25);
+  text-decoration: none;
+}
+
+/* MAIN CONTENT */
+.main-content {
+  flex: 1;
+  padding: 40px 50px;
+  overflow-y: auto;
+}
+
+/* HEADER */
+.dashboard-header {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 30px;
+  color: #222;
+  user-select: none;
+}
+
+/* FILTERS */
+.filters {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.filters select {
+  border-radius: 12px;
+  border: 1.5px solid #ced4da;
+  padding: 8px 15px;
+  font-size: 1rem;
+  color: #555;
+  transition: border-color 0.3s ease;
+}
+
+.filters select:hover,
+.filters select:focus {
+  border-color: #4a90e2;
+  outline: none;
+}
+
+.filters .input-group {
+  width: 50%;
+  box-shadow: 0 2px 6px rgb(0 0 0 / 0.1);
+  border-radius: 12px;
+  overflow: hidden;
+  background: white;
+}
+
+.filters input.form-control {
+  border: none;
+  padding: 10px 15px;
+  font-size: 1rem;
+  color: #444;
+  outline: none;
+}
+
+.filters input.form-control::placeholder {
+  color: #aaa;
+}
+
+.filters .input-group-text {
+  background: #4a90e2;
+  color: white;
+  border: none;
+  padding: 0 15px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.filters .input-group-text:hover {
+  background: #357abd;
+}
+
+/* BOOK CATEGORIES */
+.book-categories {
+  margin-bottom: 35px;
+}
+
+.book-categories button {
+  background: transparent;
+  border: 2px solid #4a90e2;
+  color: #4a90e2;
+  padding: 8px 20px;
+  font-weight: 600;
+  border-radius: 30px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.book-categories button:hover {
+  background: #4a90e2;
+  color: white;
+  box-shadow: 0 6px 12px rgb(74 144 226 / 0.4);
+}
+
+/* LIVROS GRID */
+.livros-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 25px;
+}
+
+/* LIVRO CARD */
+.livro-card {
+  perspective: 1200px;
+  cursor: pointer;
+}
+
+.card-inner {
+  width: 100%;
+  height: 270px;
+  position: relative;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-style: preserve-3d;
+  border-radius: 20px;
+  box-shadow: 0 8px 24px rgb(0 0 0 / 0.15);
+}
+
+.livro-card:hover .card-inner {
+  transform: rotateY(180deg);
+}
+
+.card-front,
+.card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  backface-visibility: hidden;
+  overflow: hidden;
+}
+
+.card-front img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 20px;
+  transition: transform 0.3s ease;
+}
+
+.card-front img:hover {
+  transform: scale(1.05);
+}
+
+.card-back {
+  background: rgba(255, 255, 255, 0.2); 
+  backdrop-filter: blur(10px); 
+  -webkit-backdrop-filter: blur(10px); 
+  color: #000; 
+  transform: rotateY(180deg);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  text-align: center;
+  font-weight: 600;
+  font-size: 1.05rem;
+  box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.1); 
+  user-select: none;
+  border-radius: 12px;
+}
+
+/* MODO ESCURO */
+.dark-mode {
+  background-color: #121212;
+  color: #e0e0e0;
+}
+
+.dark-mode .sidebar {
+  background: linear-gradient(180deg, #222, #333);
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.6);
+}
+
+.dark-mode .sidebar .nav-link {
+  color: #ccc;
+}
+
+.dark-mode .sidebar .nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.dark-mode .main-content {
+  background-color: #1e1e1e;
+}
+
+.dark-mode .dashboard-header {
+  color: #e0e0e0;
+}
+
+.dark-mode .filters .input-group-text {
+  background: #555;
+  color: #fff;
+}
+
+.dark-mode .filters input.form-control {
+  background: #2c2c2c;
+  color: #ddd;
+}
+
+.dark-mode .filters input::placeholder {
+  color: #aaa;
+}
+
+.dark-mode .book-categories button {
+  border-color: #888;
+  color: #ccc;
+}
+
+.dark-mode .book-categories button:hover {
+  background: #444;
+  color: #fff;
+  box-shadow: 0 6px 12px rgba(255, 255, 255, 0.1);
+}
+
+.dark-mode .card-back {
+  background: linear-gradient(135deg, #3b3b3b, #555);
+  color: #fff;
+}
+
+.destaques-container h4 {
+  font-weight: bold;
+  color: inherit;
+}
+
+.destaques-boxes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.destaque-card {
+  position: relative;
+  width: 48%;
+  height: 200px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 13px;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  padding: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  transition: transform 0.3s ease;
+}
+
+.destaque-card:hover {
+  transform: scale(1.02);
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(to top, rgba(0,0,0,0.6), rgba(0,0,0,0));
+  z-index: 1;
+}
+
+.mini-capa {
+  position: absolute;
+  bottom: 15px;
+  left: 15px;
+  width: 40px;
+  height: 60px;
+  object-fit: cover;
+  z-index: 2;
+  border-radius: 4px;
+  box-shadow: 0 0 6px rgba(0,0,0,0.5);
+}
+
+.info {
+  z-index: 2;
+  margin-left: 60px;
+  color: #fff;
+}
+
+.info h5 {
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+.info p {
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 2;
+  color: #fff;
+  font-size: 1.2rem;
+}
+
+.download-icon {
+  margin-top: 10px;
+  color: #000;
+  transition: transform 0.2s ease;
+}
+
+.download-icon:hover {
+  transform: scale(1.2);
+  color: #333;
+}
+
+.dark-mode-toggle {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  cursor: pointer;
+  color: #333;
+  z-index: 1000;
+  transition: color 0.3s ease;
+}
+
+.dark-mode .dark-mode-toggle {
+  color: #f9faff;
+}

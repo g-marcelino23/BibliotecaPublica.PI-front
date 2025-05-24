@@ -1,0 +1,185 @@
+/* Fundo cinza clarinho */
+.home-wrapper {
+  height: 100vh;
+  background-color: #d4d4d4; /* cinza bem claro */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Container das duas colunas */
+.content-container {
+  display: flex;
+  max-width: 1200px;
+  width: 100%;
+  height: 800px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  border-radius: 10px;
+  overflow: hidden;
+  background: white;
+}
+
+/* Coluna esquerda com vídeo e texto sobreposto */
+.video-text-container {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: black;
+}
+
+/* Vídeo ocupa todo espaço da coluna esquerda */
+.video-background {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.);
+}
+
+/* Texto sobre o vídeo */
+.overlay-text {
+  position: absolute;
+  color: #000000;
+  padding: 20px;
+  max-width: 80%;
+  text-align: center;
+  z-index: 2;
+  background: rgba(0, 0, 0, 0);
+  border-radius: 10px;
+}
+
+.overlay-text h1 {
+  font-size: 2.2rem;
+  margin-bottom: 10px;
+}
+
+.overlay-text p {
+  font-size: 1.1rem;
+  line-height: 1.4;
+}
+
+/* Coluna direita do formulário */
+.form-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 30px;
+  background-color: #fff;
+}
+
+/* Estilo do formulário */
+.form-box {
+  width: 100%;
+  max-width: 320px;
+}
+
+.form-box h2 {
+  margin-bottom: 25px;
+  text-align: center;
+}
+
+.input-icon {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.input-icon input {
+  width: 100%;
+  padding: 10px 10px 10px 35px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.input-icon svg {
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  transform: translateY(-50%);
+  color: #666;
+}
+
+.input-icon input:focus {
+  border-color: #007bff;
+}
+
+/* Botões */
+.btn {
+  width: 100%;
+  padding: 10px;
+  font-size: 1.1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  border: none;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  color: white;
+}
+
+.btn-success {
+  background-color: #28a745;
+  color: white;
+}
+
+/* Texto para trocar entre login/cadastro */
+.switch-text {
+  text-align: center;
+  margin-top: 15px;
+  font-size: 0.9rem;
+}
+
+.link-text {
+  color: #007bff;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+/* Mensagem de erro */
+.alert {
+  margin-bottom: 15px;
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
+.alert-danger {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+/* Animação simples ao trocar formulário */
+.animate {
+  animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+/* Responsividade */
+@media(max-width: 900px) {
+  .content-container {
+    flex-direction: column;
+    height: auto;
+    max-width: 400px;
+  }
+  .video-text-container, .form-container {
+    flex: none;
+    width: 100%;
+    height: 300px;
+  }
+  .overlay-text {
+    max-width: 90%;
+    font-size: 1rem;
+  }
+}
