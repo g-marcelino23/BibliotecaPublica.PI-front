@@ -1,73 +1,73 @@
+/* Opção 1: Estilo Minimalista e Moderno */
 .cadastro-livro-container {
-    max-width: 600px;
-    margin: 50px auto;
-    background: #fffaf5;
-    padding: 40px;
-    border-radius: 12px;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-    font-family: 'Lora', serif;
-  }
-  
-  .cadastro-titulo {
+    max-width: 550px; /* Levemente mais estreito para um look mais contido */
+    margin: 60px auto;
+    background: #ffffff; /* Fundo branco puro */
+    padding: 45px;
+    border-radius: 8px; /* Bordas um pouco menos arredondadas */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08); /* Sombra mais suave */
+    font-family: 'Roboto', sans-serif; /* Fonte sans-serif moderna */
+}
+
+.cadastro-titulo {
     text-align: center;
-    margin-bottom: 30px;
-    font-size: 2rem;
-    color: #4a2e1f;
-  }
-  
-  .cadastro-form label {
+    margin-bottom: 35px;
+    font-size: 1.8rem; /* Título um pouco menor, mais elegante */
+    color: #333; /* Cor escura principal */
+    font-weight: 500; /* Peso médio para o título */
+}
+
+.cadastro-form label {
     display: block;
-    margin-top: 20px;
-    font-weight: bold;
-    color: #5b3a2c;
-  }
-  
-  .cadastro-form input,
-  .cadastro-form textarea {
+    margin-top: 25px; /* Mais espaçamento acima do label */
+    font-weight: 500; /* Peso médio para o label */
+    color: #555; /* Cinza escuro para labels */
+    font-size: 0.9rem; /* Label um pouco menor */
+    margin-bottom: 8px; /* Espaço entre label e input */
+}
+
+.cadastro-form input,
+.cadastro-form textarea {
     width: 100%;
-    padding: 10px;
-    margin-top: 8px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
+    padding: 12px; /* Padding um pouco maior para inputs */
+    margin-top: 0; /* Remove margin-top, já que o label tem margin-bottom */
+    border-radius: 6px;
+    border: 1px solid #dfe1e5; /* Borda cinza clara */
     font-size: 1rem;
     font-family: inherit;
-  }
-  
-  .cadastro-form textarea {
-    resize: vertical;
-    min-height: 100px;
-  }
-  
-  .cadastro-form button {
-    margin-top: 30px;
-    width: 100%;
-    padding: 12px;
-    background-color: #6c3e19;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-size: 1.1rem;
-    cursor: pointer;
-    transition: 0.3s;
-  }
-  
-  .cadastro-form button:hover {
-    background-color: #8a5123;
-  }
+    background-color: #f8f9fa; /* Fundo levemente acinzentado para inputs */
+    transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
 
-  .cadastro-form input[type="button"]{
-    margin-top: 30px;
+.cadastro-form input:focus,
+.cadastro-form textarea:focus {
+    outline: none;
+    border-color: #007bff; /* Azul para foco */
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25); /* Sombra sutil no foco */
+    background-color: #fff;
+}
+
+.cadastro-form textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+.cadastro-form button,
+.cadastro-form input[type="button"] {
+    margin-top: 35px;
     width: 100%;
-    padding: 12px;
-    background-color: #6c3e19;
+    padding: 14px; /* Botão com mais padding */
+    background-color: #007bff; /* Azul moderno */
     color: white;
     border: none;
-    border-radius: 8px;
-    font-size: 1.1rem;
+    border-radius: 6px;
+    font-size: 1rem; /* Tamanho de fonte padrão para o texto do botão */
+    font-weight: 500;
     cursor: pointer;
-    transition: 0.3s;
-  }
-  
-  .cadastro-form input[type="button"]:hover {
-    background-color: #8a5123;
-  }
+    transition: background-color 0.2s ease-in-out;
+}
+
+.cadastro-form button:hover,
+.cadastro-form input[type="button"]:hover {
+    background-color: #0056b3; /* Azul mais escuro no hover */
+}

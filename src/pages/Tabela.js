@@ -1,4 +1,5 @@
-import "../styles/Tabela.css";
+// src/components/Tabela.js
+import "../styles/Tabela.css"; // Seu CSS
 
 function Tabela({ arrayLivros, selecionar }) {
   return (
@@ -15,28 +16,35 @@ function Tabela({ arrayLivros, selecionar }) {
         </tr>
       </thead>
       <tbody>
-        {arrayLivros.map((obj, indice) => (
-          <tr key={indice}>
+        {arrayLivros && arrayLivros.map((obj, indice) => ( // Adicionada verificação para arrayLivros
+          <tr key={obj.id || indice}> {/* Prioriza obj.id como chave se existir */}
             <td>{indice + 1}</td>
             <td>{obj.titulo}</td>
             <td>{obj.autor}</td>
-            <td>{obj.descricao}</td>
+            <td>{obj.descricao}</td> {/* Descrição mantida */}
             <td>
-              <a
-                href={`http://localhost:8080/api/livro/download/${encodeURIComponent(obj.titulo)}`}
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                {obj.caminhoArquivo}
-              </a>
+              {/* Link para PDF mantido - ajuste a URL se necessário */}
+              {obj.caminhoArquivo ? ( // Verifica se existe caminho do arquivo
+                <a
+                  href={`http://localhost:8080/api/livro/download/${encodeURIComponent(obj.titulo)}`} // Ou use obj.id ou obj.caminhoArquivo se for mais apropriado para a URL
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  {obj.caminhoArquivo} {/* Ou um texto como "Baixar PDF" */}
+                </a>
+              ) : (
+                <span>PDF não disponível</span>
+              )}
             </td>
             <td>
+              {/* Imagem da capa mantida */}
               {obj.caminhoCapa ? (
                 <img
-                  src={`http://localhost:8080/api/livro/capa/${encodeURIComponent(obj.titulo)}`}
-                  alt="Capa"
+                  src={`http://localhost:8080/api/livro/capa/${encodeURIComponent(obj.titulo)}`} // Ou use obj.id ou obj.caminhoCapa
+                  alt={`Capa de ${obj.titulo}`}
                   width="60"
                   height="90"
+                  style={{ objectFit: 'cover' }} // Adicionado para melhor ajuste da imagem
                 />
               ) : (
                 <span>Sem capa</span>
