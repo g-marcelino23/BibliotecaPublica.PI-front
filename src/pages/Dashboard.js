@@ -77,7 +77,7 @@ const DashboardBiblioteca = () => {
       <div className="sidebar-modern glass-effect p-4">
         <h4 className="sidebar-title">📚 Biblioteca Pública</h4>
         <ul className="nav flex-column gap-3 mt-4">
-          <li><Link to="/livros-cadastrados" className="nav-link text-dark fw-semibold">📖 Visualizar Livros</Link></li>
+          <li><Link to="/lista-livros" className="nav-link text-dark fw-semibold">📖 Visualizar Livros</Link></li>
           <li><Link to="/cadastro-livros" className="nav-link text-dark fw-semibold">➕ Cadastrar Livro</Link></li>
           <li><Link to="/perfil" className="nav-link text-dark fw-semibold">👤 Meu Perfil</Link></li>
           <li><Link to="/" className="nav-link text-dark fw-semibold">🚪 Sair</Link></li>

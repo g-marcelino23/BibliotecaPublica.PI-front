@@ -4,9 +4,11 @@ import api from '../services/api.js';
 import BookCard from './BookCard'; // Importe o novo componente
 import { useNavigate } from 'react-router-dom';
 import '../styles/BookCard.css'; // Importe o CSS para o container da lista
+import { FaSearch } from 'react-icons/fa';
 
 function ListaLivrosPage() {
   const [livros, setLivros] = useState([]);
+  const [busca, setBusca] = useState('')
   const [loading, setLoading] = useState(true);
   const [feedback, setFeedback] = useState({ message: '', type: '' }); // Para feedback de exclusão
   const token = localStorage.getItem('token');
@@ -67,19 +69,38 @@ function ListaLivrosPage() {
     }
   };
 
+  const livrosFiltrados = livros.filter((livro) => (
+    livro.titulo.toLowerCase().includes(busca.toLowerCase()) ||
+    livro.autor.toLowerCase().includes(busca.toLowerCase())
+  ));
+
   if (loading) return <p>Carregando livros...</p>;
   
   return (
     <div>
-      <h2>Nossa Coleção de Livros</h2>
+      <h2 className='text-center mt-4 mb-4 '>Nossa Coleção de Livros</h2>
       {feedback.message && (
         <p style={{ color: feedback.type === 'error' ? 'red' : 'green', textAlign: 'center' }}>
           {feedback.message}
         </p>
       )}
+      
+      <div className="filters d-flex justify-content-center align-items-center gap-3 mb-4">
+        <div className="input-group w-50">
+          <input 
+            type="text" 
+            className="form-control" 
+            value={busca}
+            onChange={(e) => setBusca(e.target.value)}
+            placeholder="Buscar livros por título ou autor..." 
+          />
+          <span className="input-group-text"><FaSearch /></span>
+        </div>
+      </div>
+
       {livros.length > 0 ? (
         <div className="book-list-container"> {/* Container para o layout flex/grid */}
-          {livros.map(livro => (
+          {livrosFiltrados.map(livro => (
             <BookCard
               key={livro.id}
               livro={livro}
@@ -89,7 +110,7 @@ function ListaLivrosPage() {
           ))}
         </div>
       ) : (
-        !loading && <p>Nenhum livro cadastrado.</p>
+        !loading && <p className='text-center mt-4'>Nenhum livro cadastrado.</p>
       )}
     </div>
   );
