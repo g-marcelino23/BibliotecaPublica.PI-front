@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import '../styles/Dashboard.css';
 import { FaSearch, FaDownload, FaSun, FaMoon } from 'react-icons/fa';
+import jwtDecodefrom, { jwtDecode } from 'jwt-decode';
 import capa1 from '../assets/capas/capa1.jpg';
 import capa2 from '../assets/capas/capa2.jpg';
 import capa3 from '../assets/capas/capa3.jpg';
@@ -24,14 +25,21 @@ import capa14 from '../assets/capas/capa14.jpg';
 const DashboardBiblioteca = () => {
   const [nomeUsuario, setNomeUsuario] = useState('');
   const [darkMode, setDarkMode] = useState(false);
+  const [decoded, setDecoded] = useState()
   const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem('token');
 
+    
     if (!token) {
       navigate('/login');
       return;
+    }
+    
+    if (token){
+      const decoded = jwtDecode(token);
+      setDecoded(decoded)
     }
 
     const nome = localStorage.getItem('userName') || 'Usuário';
@@ -78,7 +86,9 @@ const DashboardBiblioteca = () => {
         <h4 className="sidebar-title">📚 Biblioteca Pública</h4>
         <ul className="nav flex-column gap-3 mt-4">
           <li><Link to="/lista-livros" className="nav-link text-dark fw-semibold">📖 Visualizar Livros</Link></li>
-          <li><Link to="/cadastro-livros" className="nav-link text-dark fw-semibold">➕ Cadastrar Livro</Link></li>
+          { decoded && decoded.role === "ROLE_ADMIN" && 
+              (<li><Link to="/cadastro-livros" className="nav-link text-dark fw-semibold">➕ Cadastrar Livro</Link></li>)
+          }
           <li><Link to="/perfil" className="nav-link text-dark fw-semibold">👤 Meu Perfil</Link></li>
           <li><Link to="/" className="nav-link text-dark fw-semibold">🚪 Sair</Link></li>
         </ul>

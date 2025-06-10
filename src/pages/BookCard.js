@@ -1,9 +1,24 @@
 // src/components/BookCard.js
-import React from 'react';
 import '../styles/BookCard.css'; // Vamos criar este arquivo CSS
+import { jwtDecode } from 'jwt-decode';
+import { useState, useEffect} from 'react';
+
+
 
 function BookCard({ livro, onEdit, onDelete }) {
-  const defaultCover = 'https://via.placeholder.com/120x180.png?text=Sem+Capa'; // Imagem padrão
+  const defaultCover = 'https://picsum.photos/120/180?grayscale&text=Sem+Capa'; // Imagem padrão
+  const [decoded, setDecoded] = useState();
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+
+    if (token){
+      const decoded = jwtDecode(token);
+      setDecoded(decoded)
+    }
+  },[]);
+
+  
+  
 
   // Constrói a URL da capa corretamente
   const capaUrl = livro.caminhoCapa
@@ -38,14 +53,16 @@ function BookCard({ livro, onEdit, onDelete }) {
           </a>
         )}
       </div>
-      <div className="book-card-actions">
-        <button onClick={() => onEdit(livro.id)} className="book-card-button edit">
-          Editar
-        </button>
-        <button onClick={() => onDelete(livro.id, livro.titulo)} className="book-card-button delete">
-          Excluir
-        </button>
-      </div>
+      { decoded && decoded.role === "ROLE_ADMIN" && (
+        <div className="book-card-actions">
+          <button onClick={() => onEdit(livro.id)} className="book-card-button edit">
+            Editar
+          </button>
+          <button onClick={() => onDelete(livro.id, livro.titulo)} className="book-card-button delete">
+            Excluir
+          </button>
+        </div>
+      )}
     </div>
   );
 }
