@@ -69,9 +69,9 @@ function CadastroLivro() {
     setIsEditMode(false);
     setFeedback({ message: '', type: '' });
     if (navegar && livroId) { // Se estava editando e cancelou/concluiu, volta para lista
-        navigate('/livros');
+        navigate('/lista-livros');
     } else if (navegar) { // Se estava cadastrando e limpou/concluiu, volta para lista
-        navigate('/livros');
+        navigate('/lista-livros');
     } else if (livroId) { // Se cancelou a edição mas não quer navegar, volta para /cadastrar
         navigate('/cadastrar');
     }

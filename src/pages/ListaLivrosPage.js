@@ -5,6 +5,7 @@ import BookCard from './BookCard'; // Importe o novo componente
 import { useNavigate } from 'react-router-dom';
 import '../styles/BookCard.css'; // Importe o CSS para o container da lista
 import { FaSearch } from 'react-icons/fa';
+import Loading from '../components/Loading.js';
 
 function ListaLivrosPage() {
   const [livros, setLivros] = useState([]);
@@ -74,7 +75,7 @@ function ListaLivrosPage() {
     livro.autor.toLowerCase().includes(busca.toLowerCase())
   ));
 
-  if (loading) return <p>Carregando livros...</p>;
+  if (loading) return Loading;
   
   return (
     <div>

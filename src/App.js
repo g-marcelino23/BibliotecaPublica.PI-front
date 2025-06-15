@@ -37,6 +37,7 @@ function App() {
           path="/cadastro-livros" 
           element={<Layout><CadastroLivros /></Layout>} 
         />
+        <Route path="/editar/:livroId" element={<CadastroLivros />} />
         {/* Exemplo para uma futura página de perfil: */}
         {/* <Route path="/perfil" element={<Layout><Perfil /></Layout>} /> */}
         
