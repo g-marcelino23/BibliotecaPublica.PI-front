@@ -1,0 +1,58 @@
+/* src/components/Sidebar.css */
+
+.sidebar-modern {
+  width: 260px;
+  background: rgba(255, 255, 255, 0.7); /* Efeito vidro */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-right: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 30px 20px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 2px 0 15px rgba(0, 0, 0, 0.05);
+  transition: background-color 0.3s ease, border-right 0.3s ease; /* Adicionado para transição suave */
+}
+
+.sidebar-modern .sidebar-title {
+  font-weight: 700;
+  font-size: 1.6rem;
+  margin-bottom: 40px;
+  letter-spacing: 1px;
+  user-select: none;
+  color: #333;
+  transition: color 0.3s ease;
+}
+
+.sidebar-modern .nav-link {
+  color: #333; /* Texto escuro para contraste no fundo claro */
+  font-weight: 600;
+  font-size: 1.05rem;
+  padding: 10px 15px;
+  border-radius: 8px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.sidebar-modern .nav-link:hover {
+  background-color: #4a90e2;
+  color: white; /* Texto branco ao passar o mouse */
+  text-decoration: none;
+}
+
+/* ESTILOS PARA O MODO ESCURO */
+.dark-mode .sidebar-modern {
+  background: rgba(28, 28, 28, 0.7); /* Efeito vidro escuro */
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dark-mode .sidebar-modern .sidebar-title {
+  color: #e0e0e0;
+}
+
+.dark-mode .sidebar-modern .nav-link {
+  color: #ccc;
+}
+
+.dark-mode .sidebar-modern .nav-link:hover {
+  background-color: #4a90e2;
+  color: #fff;
+}

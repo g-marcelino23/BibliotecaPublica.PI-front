@@ -1,28 +1,45 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
+// Importe o novo componente de Layout
+import Layout from './components/Layout'; 
+
+// Importe suas páginas
 import Home from './pages/Home';
-import CadastroLivros from './pages/CadastroLivros';
 import CadastroUsuario from './pages/CadastroUsuario';
-import LoginUsuario from './pages/LoginUsuario';  
+import LoginUsuario from './pages/LoginUsuario';
 import Dashboard from './pages/Dashboard';
-import ListaLivrosPage from './pages/ListaLivrosPage'; // Importando a página de lista de livros
-
-
-// importar outras páginas...
+import ListaLivrosPage from './pages/ListaLivrosPage';
+import CadastroLivros from './pages/CadastroLivros';
+// Supondo que você tenha uma página de Perfil também
+// import Perfil from './pages/Perfil'; 
 
 function App() {
   return (
     <Router>
       <Routes>
+        {/* --- ROTAS PÚBLICAS (Sem Sidebar) --- */}
+        {/* Estas rotas não são envolvidas pelo Layout */}
         <Route path="/" element={<Home />} />
-        <Route path="/cadastro-livros" element={<CadastroLivros />} />
-        <Route path="/cadastro-usuario" element={<CadastroUsuario />} />
         <Route path="/login-usuario" element={<LoginUsuario />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/lista-livros" element={<ListaLivrosPage />} /> {/* Rota para a lista de livros */}
+        <Route path="/cadastro-usuario" element={<CadastroUsuario />} />
+
+        {/* --- ROTAS PRIVADAS (Com Sidebar) --- */}
+        {/* Todas as rotas aqui dentro terão a sidebar e o dark mode automaticamente */}
+        <Route 
+          path="/dashboard" 
+          element={<Layout><Dashboard /></Layout>} 
+        />
+        <Route 
+          path="/lista-livros" 
+          element={<Layout><ListaLivrosPage /></Layout>} 
+        />
+        <Route 
+          path="/cadastro-livros" 
+          element={<Layout><CadastroLivros /></Layout>} 
+        />
+        {/* Exemplo para uma futura página de perfil: */}
+        {/* <Route path="/perfil" element={<Layout><Perfil /></Layout>} /> */}
         
-      
-     
-        {/* outras rotas depois */}
       </Routes>
     </Router>
   );

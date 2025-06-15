@@ -1,0 +1,51 @@
+/* src/styles/Layout.css */
+
+/* Reset básico (opcional, se você já não tiver um global) */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background: #f9faff;
+  color: #333;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body.dark-mode {
+  background-color: #121212;
+  color: #e0e0e0;
+}
+
+.layout-container {
+  display: flex;
+  height: 100vh;
+}
+
+.main-content-area {
+  flex: 1;
+  height: 100vh;
+  overflow-y: auto;
+  position: relative; /* Para posicionar o toggle do dark mode */
+  padding: 40px 50px;
+}
+
+.page-content {
+  width: 100%;
+}
+
+.dark-mode-toggle {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  cursor: pointer;
+  z-index: 1000;
+  color: #333;
+  transition: color 0.3s ease;
+}
+
+.dark-mode .dark-mode-toggle {
+  color: #f9faff;
+}

@@ -1,185 +1,300 @@
-/* Fundo cinza clarinho */
-.home-wrapper {
-  height: 100vh;
-  background-color: #d4d4d4; /* cinza bem claro */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-  box-sizing: border-box;
+/* Paleta de cores e variáveis */
+:root {
+    --primary-color: #4A90E2; /* Azul mais vibrante */
+    --secondary-color: #50E3C2; /* Verde água/ciano para destaque */
+    --text-color: #333; /* Preto quase escuro para texto */
+    --light-bg-color: #e0e6ed; /* Um cinza azulado bem suave para o fundo */
+    --white: #ffffff;
+    --gray-border: #dcdcdc; /* Cinza suave para bordas */
+    --link-color: #4A90E2;
+    --error-bg: #ffe0e0;
+    --error-text: #d63031;
+
+    --font-family-base: 'Arial', sans-serif; /* Ou 'Montserrat', sans-serif se ainda quiser */
+    --border-radius-sm: 6px;
+    --border-radius-md: 12px;
 }
 
-/* Container das duas colunas */
-.content-container {
-  display: flex;
-  max-width: 1200px;
-  width: 100%;
-  height: 800px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-  border-radius: 10px;
-  overflow: hidden;
-  background: white;
+/* --- Global Reset and Base Styles --- */
+* {
+    box-sizing: border-box;
 }
 
-/* Coluna esquerda com vídeo e texto sobreposto */
-.video-text-container {
-  flex: 1;
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: black;
+body {
+    margin: 0;
+    font-family: var(--font-family-base);
+    color: var(--text-color);
 }
 
-/* Vídeo ocupa todo espaço da coluna esquerda */
-.video-background {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: brightness(0.);
+/* --- Home Wrapper --- */
+.home-container {
+    height: 100vh;
+    background-color: var(--light-bg-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
+    overflow: hidden;
 }
 
-/* Texto sobre o vídeo */
-.overlay-text {
-  position: absolute;
-  color: #000000;
-  padding: 20px;
-  max-width: 80%;
-  text-align: center;
-  z-index: 2;
-  background: rgba(0, 0, 0, 0);
-  border-radius: 10px;
+/* --- Content Wrapper (para as duas colunas) --- */
+.home-content {
+    display: flex;
+    max-width: 1200px;
+    width: 100%;
+    height: 700px; /* Altura um pouco reduzida para parecer mais "quadrado" */
+    box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+    border-radius: var(--border-radius-md);
+    overflow: hidden;
+    background: var(--white);
 }
 
-.overlay-text h1 {
-  font-size: 2.2rem;
-  margin-bottom: 10px;
+/* --- Coluna Esquerda: Imagem e Texto --- */
+.home-media {
+    flex: 1.2; /* Dando um pouco mais de espaço para a imagem */
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: var(--black); /* Fundo preto caso a imagem não carregue */
 }
 
-.overlay-text p {
-  font-size: 1.1rem;
-  line-height: 1.4;
+.background-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.3); /* Imagem mais escura para o texto branco se destacar */
+    transition: filter 0.5s ease;
 }
 
-/* Coluna direita do formulário */
-.form-container {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 40px 30px;
-  background-color: #fff;
+.media-overlay-text {
+    position: absolute;
+    color: var(--white);
+    padding: 20px;
+    max-width: 85%;
+    text-align: center;
+    z-index: 2;
+    background: rgba(0, 0, 0, 0.3); /* Fundo semi-transparente para o texto */
+    border-radius: var(--border-radius-sm);
+    backdrop-filter: blur(2px); /* Efeito de blur */
 }
 
-/* Estilo do formulário */
-.form-box {
-  width: 100%;
-  max-width: 320px;
+.media-overlay-text h1 {
+    font-size: 2.3rem;
+    margin-bottom: 15px;
+    font-weight: bold;
+    line-height: 1.2;
 }
 
-.form-box h2 {
-  margin-bottom: 25px;
-  text-align: center;
+.media-overlay-text p {
+    font-size: 1.2rem;
+    line-height: 1.5;
+    font-weight: lighter;
 }
 
-.input-icon {
-  position: relative;
-  margin-bottom: 20px;
+/* --- Coluna Direita: Formulário de Autenticação --- */
+.auth-form-section {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    background-color: var(--white);
 }
 
-.input-icon input {
-  width: 100%;
-  padding: 10px 10px 10px 35px;
-  font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  outline: none;
-  transition: border-color 0.3s ease;
+/* --- Estilo do Formulário --- */
+.auth-form {
+    width: 100%;
+    max-width: 380px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
 }
 
-.input-icon svg {
-  position: absolute;
-  top: 50%;
-  left: 10px;
-  transform: translateY(-50%);
-  color: #666;
+.auth-form h2 {
+    font-size: 2rem;
+    margin-bottom: 25px;
+    color: var(--text-color);
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
-.input-icon input:focus {
-  border-color: #007bff;
+/* --- Campos de Input com Ícones --- */
+.input-group {
+    position: relative;
+    width: 100%;
 }
 
-/* Botões */
+.input-group input,
+.input-group select {
+    width: 100%;
+    padding: 12px 12px 12px 45px;
+    font-size: 1rem;
+    border: 1px solid var(--gray-border);
+    border-radius: var(--border-radius-sm);
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    background-color: #fcfcfc;
+    color: var(--text-color);
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+.input-group input:focus,
+.input-group select:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
+}
+
+.input-group svg {
+    position: absolute;
+    top: 50%;
+    left: 15px;
+    transform: translateY(-50%);
+    color: #888;
+    font-size: 1.1rem;
+}
+
+/* Seta do select */
+.input-group select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23888' width='24px' height='24px'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3Cpath d='M0 0h24v24H0z' fill='none'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    background-size: 20px;
+}
+
+
+/* --- Botões --- */
 .btn {
-  width: 100%;
-  padding: 10px;
-  font-size: 1.1rem;
-  border-radius: 6px;
-  cursor: pointer;
-  border: none;
+    width: 100%;
+    padding: 12px;
+    font-size: 1.1rem;
+    border-radius: var(--border-radius-sm);
+    cursor: pointer;
+    border: none;
+    font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .btn-primary {
-  background-color: #007bff;
-  color: white;
+    background-color: var(--primary-color);
+    color: var(--white);
+}
+
+.btn-primary:hover {
+    background-color: #357ABD;
+    transform: translateY(-2px);
 }
 
 .btn-success {
-  background-color: #28a745;
-  color: white;
+    background-color: var(--secondary-color);
+    color: var(--text-color);
 }
 
-/* Texto para trocar entre login/cadastro */
-.switch-text {
-  text-align: center;
-  margin-top: 15px;
-  font-size: 0.9rem;
+.btn-success:hover {
+    background-color: #3fc0a3;
+    transform: translateY(-2px);
+}
+
+/* --- Texto para trocar entre login/cadastro --- */
+.switch-form-text {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 0.95rem;
+    color: #666;
 }
 
 .link-text {
-  color: #007bff;
-  cursor: pointer;
-  text-decoration: underline;
+    color: var(--link-color);
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease, text-decoration 0.3s ease;
 }
 
-/* Mensagem de erro */
-.alert {
-  margin-bottom: 15px;
-  padding: 8px 12px;
-  border-radius: 4px;
-  font-size: 0.9rem;
+.link-text:hover {
+    color: #357ABD;
+    text-decoration: underline;
 }
 
-.alert-danger {
-  background-color: #f8d7da;
-  color: #721c24;
+/* --- Mensagem de erro --- */
+.alert-message {
+    margin-bottom: 15px;
+    padding: 10px 15px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box;
 }
 
-/* Animação simples ao trocar formulário */
+.alert-message.error {
+    background-color: var(--error-bg);
+    color: var(--error-text);
+    border: 1px solid var(--error-text);
+}
+
+/* --- Animação simples ao trocar formulário --- */
 .animate {
-  animation: fadeIn 0.5s ease;
+    animation: fadeIn 0.5s ease;
 }
 
 @keyframes fadeIn {
-  from {opacity: 0;}
-  to {opacity: 1;}
+    from {opacity: 0;}
+    to {opacity: 1;}
 }
 
-/* Responsividade */
+/* --- Responsividade --- */
 @media(max-width: 900px) {
-  .content-container {
-    flex-direction: column;
-    height: auto;
-    max-width: 400px;
-  }
-  .video-text-container, .form-container {
-    flex: none;
-    width: 100%;
-    height: 300px;
-  }
-  .overlay-text {
-    max-width: 90%;
-    font-size: 1rem;
-  }
+    .home-content {
+        flex-direction: column;
+        height: auto;
+        max-width: 90%;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        box-shadow: none;
+        border-radius: 0;
+    }
+    .home-media, .auth-form-section {
+        flex: none;
+        width: 100%;
+    }
+    .home-media {
+        height: 250px;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+    .media-overlay-text {
+        padding: 20px;
+        max-width: 90%;
+    }
+    .media-overlay-text h1 {
+        font-size: 1.8rem;
+    }
+    .media-overlay-text p {
+        font-size: 1rem;
+    }
+    .auth-form-section {
+        padding: 30px 20px;
+    }
+}
+
+@media(max-width: 500px) {
+    .home-container {
+        padding: 10px;
+    }
+    .auth-form h2 {
+        font-size: 1.8rem;
+    }
+    .media-overlay-text h1 {
+        font-size: 1.5rem;
+    }
+    .media-overlay-text p {
+        font-size: 0.9rem;
+    }
 }

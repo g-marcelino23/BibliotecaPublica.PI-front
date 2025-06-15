@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import '../styles/Home.css';
-import videoBg from '../assets/videos/home.mp4';
+// ALTERADO: Importação do vídeo ao invés da imagem
+import videoBg from '../assets/videos/home.mp4'; // **VERIFIQUE SE O CAMINHO DO SEU VÍDEO ESTÁ CORRETO**
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-// ADICIONADO: Ícone FaShieldAlt para o campo de role
 import { FaUser, FaLock, FaEnvelope, FaUserPlus, FaSignInAlt, FaShieldAlt } from 'react-icons/fa';
 
 function Home() {
@@ -13,11 +13,12 @@ function Home() {
     const [registerName, setRegisterName] = useState('');
     const [registerEmail, setRegisterEmail] = useState('');
     const [registerPassword, setRegisterPassword] = useState('');
-    // ADICIONADO: Novo estado para controlar o papel (role) selecionado. Inicia como 'USER'.
     const [registerRole, setRegisterRole] = useState('USER');
     const [error, setError] = useState('');
 
     const navigate = useNavigate();
+
+    document.title = `Biblioteca Online | ${isRegistering ? 'Cadastro' : 'Login'}`;
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -32,7 +33,11 @@ function Home() {
             localStorage.setItem('userName', userName);
             navigate('/dashboard');
         } catch (err) {
-            setError('E-mail ou senha inválidos.');
+            if (err.response && err.response.data && err.response.data.message) {
+                setError(err.response.data.message);
+            } else {
+                setError('E-mail ou senha inválidos. Tente novamente.');
+            }
         }
     };
 
@@ -40,75 +45,87 @@ function Home() {
         e.preventDefault();
         setError('');
         try {
-            // ATUALIZADO: A role selecionada agora é incluída no corpo da requisição
             const response = await axios.post('http://localhost:8080/api/auth/register', {
                 name: registerName,
                 email: registerEmail,
                 password: registerPassword,
-                role: registerRole, // <--- CAMPO DE ROLE ENVIADO PARA A API
+                role: registerRole, 
             });
             const { token, name: userName } = response.data;
             localStorage.setItem('token', token);
             localStorage.setItem('userName', userName);
-            // Após o registro, pode ser uma boa ideia levar o usuário para a tela de login
-            // em vez de logá-lo diretamente, mas isso depende do seu fluxo desejado.
-            // Por enquanto, vamos manter o login direto.
             navigate('/dashboard');
         } catch (err) {
-            setError('Erro ao registrar. Verifique os dados e tente novamente.');
+               if (err.response && err.response.data && err.response.data.message) {
+                setError(err.response.data.message);
+            } else {
+                setError('Erro ao registrar. Verifique os dados e tente novamente.');
+            }
         }
     };
 
     return (
-        <div className={`home-wrapper ${isRegistering ? 'register-mode' : ''}`}>
-            <div className="content-container">
+        <div className="home-container">
+            <div className="home-content">
                 {/* Coluna esquerda: vídeo com texto sobreposto */}
-                <div className="video-text-container">
-                    <video className="video-background" autoPlay loop muted>
+                <div className="home-media">
+                    {/* ALTERADO: Adicionado o elemento de vídeo novamente */}
+                    <video className="video-background" autoPlay loop muted playsInline>
                         <source src={videoBg} type="video/mp4" />
                         Seu navegador não suporta vídeo.
                     </video>
-                    <div className="overlay-text">
-                        <h1>Bem-vindo à Biblioteca Pública Online</h1>
-                        <p>Explore milhares de livros digitais e amplie seu conhecimento onde estiver.</p>
+                    <div className="media-overlay-text">
+                        <h1>Bem-vindo(a) à Biblioteca Pública Digital</h1>
+                        <p>Explore um universo de conhecimento. Milhares de livros, artigos e recursos, sempre ao seu alcance.</p>
                     </div>
                 </div>
 
                 {/* Coluna direita: login / cadastro */}
-                <div className="form-container">
+                <div className="auth-form-section">
                     {!isRegistering ? (
-                        <form onSubmit={handleLogin} className="form-box animate">
-                            <h2><FaSignInAlt /> Login</h2>
-                            <div className="input-icon"><FaEnvelope /><input type="email" placeholder="E-mail" value={loginEmail} onChange={(e) => setLoginEmail(e.target.value)} required /></div>
-                            <div className="input-icon"><FaLock /><input type="password" placeholder="Senha" value={loginPassword} onChange={(e) => setLoginPassword(e.target.value)} required /></div>
-                            {error && <div className="alert alert-danger">{error}</div>}
-                            <button type="submit" className="btn btn-primary">Entrar</button>
-                            <p className="switch-text">
+                        <form onSubmit={handleLogin} className="auth-form animate">
+                            <h2><FaSignInAlt /> Entrar</h2>
+                            <div className="input-group">
+                                <FaEnvelope /><input type="email" placeholder="E-mail" value={loginEmail} onChange={(e) => setLoginEmail(e.target.value)} required />
+                            </div>
+                            <div className="input-group">
+                                <FaLock /><input type="password" placeholder="Senha" value={loginPassword} onChange={(e) => setLoginPassword(e.target.value)} required />
+                            </div>
+                            {error && <div className="alert-message error">{error}</div>}
+                            <button type="submit" className="btn btn-primary">Acessar Biblioteca</button>
+                            <p className="switch-form-text">
                                 Não tem uma conta?{' '}
-                                <span onClick={() => { setIsRegistering(true); setError(''); }} className="link-text">Cadastre-se aqui</span>
+                                <span onClick={() => { setIsRegistering(true); setError(''); }} className="link-text">Cadastre-se</span>
                             </p>
                         </form>
                     ) : (
-                        <form onSubmit={handleRegister} className="form-box animate">
-                            <h2><FaUserPlus /> Cadastro</h2>
-                            <div className="input-icon"><FaUser /><input type="text" placeholder="Nome" value={registerName} onChange={(e) => setRegisterName(e.target.value)} required /></div>
-                            <div className="input-icon"><FaEnvelope /><input type="email" placeholder="E-mail" value={registerEmail} onChange={(e) => setRegisterEmail(e.target.value)} required /></div>
-                            <div className="input-icon"><FaLock /><input type="password" placeholder="Senha" value={registerPassword} onChange={(e) => setRegisterPassword(e.target.value)} required /></div>
+                        <form onSubmit={handleRegister} className="auth-form animate">
+                            <h2><FaUserPlus /> Criar Conta</h2>
+                            <div className="input-group">
+                                <FaUser /><input type="text" placeholder="Nome Completo" value={registerName} onChange={(e) => setRegisterName(e.target.value)} required />
+                            </div>
+                            <div className="input-group">
+                                <FaEnvelope /><input type="email" placeholder="E-mail" value={registerEmail} onChange={(e) => setRegisterEmail(e.target.value)} required />
+                            </div>
+                            <div className="input-group">
+                                <FaLock /><input type="password" placeholder="Crie uma Senha" value={registerPassword} onChange={(e) => setRegisterPassword(e.target.value)} required />
+                            </div>
 
-                            {/* ADICIONADO: Campo de seleção para a role */}
-                            <div className="input-icon">
+                            {/* Campo de seleção para a role */}
+                            {/* ATENÇÃO: Recomendo FORTEMENTE remover a opção ADMIN de um formulário de registro público em produção. */}
+                            <div className="input-group">
                                 <FaShieldAlt />
                                 <select value={registerRole} onChange={(e) => setRegisterRole(e.target.value)} required>
                                     <option value="USER">Usuário</option>
-                                    <option value="ADMIN">Administrador</option>
+                                    <option value="ADMIN">Admin</option>
                                 </select>
                             </div>
 
-                            {error && <div className="alert alert-danger">{error}</div>}
-                            <button type="submit" className="btn btn-success">Cadastrar</button>
-                            <p className="switch-text">
+                            {error && <div className="alert-message error">{error}</div>}
+                            <button type="submit" className="btn btn-success">Registrar</button>
+                            <p className="switch-form-text">
                                 Já tem uma conta?{' '}
-                                <span onClick={() => { setIsRegistering(false); setError(''); }} className="link-text">Entrar</span>
+                                <span onClick={() => { setIsRegistering(false); setError(''); }} className="link-text">Fazer Login</span>
                             </p>
                         </form>
                     )}
