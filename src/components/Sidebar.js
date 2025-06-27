@@ -6,7 +6,10 @@ import '../styles/Sidebar.css';
 const Sidebar = ({ decoded }) => {
   return (
     <div className="sidebar-modern glass-effect p-4">
-      <h4 className="sidebar-title">📚 Biblioteca Pública</h4>
+      <Link to="/dashboard" style={{ textDecoration: 'none', color: 'inherit' }}>
+  <h4 className="sidebar-title">📚 Biblioteca Pública</h4>
+</Link>      
+      {/* <h4 className="sidebar-title">📚 Biblioteca Pública</h4> */}
       <ul className="nav flex-column gap-3 mt-4">
         <li><Link to="/lista-livros" className="nav-link">📖 Visualizar Livros</Link></li>
         {decoded && decoded.role === "ROLE_ADMIN" && (

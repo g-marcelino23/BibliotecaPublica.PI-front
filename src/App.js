@@ -11,7 +11,7 @@ import Dashboard from './pages/Dashboard';
 import ListaLivrosPage from './pages/ListaLivrosPage';
 import CadastroLivros from './pages/CadastroLivros';
 // Supondo que você tenha uma página de Perfil também
-// import Perfil from './pages/Perfil'; 
+  import Perfil from './pages/Perfil'; 
 
 function App() {
   return (
@@ -38,8 +38,8 @@ function App() {
           element={<Layout><CadastroLivros /></Layout>} 
         />
         <Route path="/editar/:livroId" element={<CadastroLivros />} />
-        {/* Exemplo para uma futura página de perfil: */}
-        {/* <Route path="/perfil" element={<Layout><Perfil /></Layout>} /> */}
+         
+        <Route path="/perfil" element={<Layout><Perfil /></Layout>} /> 
         
       </Routes>
     </Router>
