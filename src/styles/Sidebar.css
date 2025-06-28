@@ -1,58 +1,165 @@
-/* src/components/Sidebar.css */
+/* Design Melhorado: Sidebar Interativa e Retrátil */
+:root {
+  --sidebar-bg-light: #ffffff;
+  --sidebar-bg-dark: #1f2937;
+  --sidebar-width: 260px;
+  --sidebar-width-collapsed: 88px;
+  --text-light: #6b7280;
+  --text-dark: #a1a1aa;
+  --hover-bg-light: #f3f4f6;
+  --hover-bg-dark: #374151;
+  --active-bg-light: #eef5ff;
+  --active-bg-dark: #0d6efd20;
+  --active-text-light: #0d6efd;
+  --active-text-dark: #58a6ff;
+}
 
-.sidebar-modern {
-  width: 260px;
-  background: rgba(255, 255, 255, 0.7); /* Efeito vidro */
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border-right: 1px solid rgba(255, 255, 255, 0.3);
-  padding: 30px 20px;
+.sidebar-avancada {
+  width: var(--sidebar-width);
+  background-color: var(--sidebar-bg-light);
+  border-right: 1px solid #e5e7eb;
+  padding: 20px;
   display: flex;
   flex-direction: column;
-  box-shadow: 2px 0 15px rgba(0, 0, 0, 0.05);
-  transition: background-color 0.3s ease, border-right 0.3s ease; /* Adicionado para transição suave */
+  transition: width 0.3s ease-in-out;
 }
 
-.sidebar-modern .sidebar-title {
+/* --- Header --- */
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 30px;
+  padding: 0 5px;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.logo { font-size: 2rem; }
+.sidebar-title {
+  font-size: 1.5rem;
   font-weight: 700;
-  font-size: 1.6rem;
-  margin-bottom: 40px;
-  letter-spacing: 1px;
-  user-select: none;
-  color: #333;
-  transition: color 0.3s ease;
+  color: #111827;
+  margin: 0;
+  white-space: nowrap;
+  opacity: 1;
+  transition: opacity 0.2s ease, color 0.3s ease;
 }
 
-.sidebar-modern .nav-link {
-  color: #333; /* Texto escuro para contraste no fundo claro */
-  font-weight: 600;
-  font-size: 1.05rem;
-  padding: 10px 15px;
+.toggle-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #9ca3af;
+  font-size: 1.2rem;
+  padding: 5px;
+  border-radius: 50%;
+  transition: transform 0.3s ease, background-color 0.2s;
+}
+.toggle-btn:hover {
+  background-color: var(--hover-bg-light);
+}
+
+/* --- Navegação --- */
+.sidebar-nav {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  padding: 12px 15px;
   border-radius: 8px;
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.sidebar-modern .nav-link:hover {
-  background-color: #4a90e2;
-  color: white; /* Texto branco ao passar o mouse */
+  color: var(--text-light);
+  font-weight: 500;
   text-decoration: none;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+.nav-link:hover {
+  background-color: var(--hover-bg-light);
+  color: #111827;
+}
+.nav-link.active {
+  background-color: var(--active-bg-light);
+  color: var(--active-text-light);
+  font-weight: 600;
 }
 
-/* ESTILOS PARA O MODO ESCURO */
-.dark-mode .sidebar-modern {
-  background: rgba(28, 28, 28, 0.7); /* Efeito vidro escuro */
-  border-right: 1px solid rgba(255, 255, 255, 0.1);
+.nav-icon {
+  font-size: 1.2rem;
+  min-width: 28px; /* Largura mínima para o ícone */
+  text-align: center;
+  transition: transform 0.2s ease;
+}
+.link-text {
+  margin-left: 15px;
+  opacity: 1;
+  transition: opacity 0.2s ease;
 }
 
-.dark-mode .sidebar-modern .sidebar-title {
-  color: #e0e0e0;
+/* --- Footer --- */
+.sidebar-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border-top: 1px solid #e5e7eb;
+  padding-top: 20px;
+  margin-top: 20px;
+  transition: border-color 0.3s ease;
 }
 
-.dark-mode .sidebar-modern .nav-link {
-  color: #ccc;
+/* --- ESTADO ENCOLHIDO (COLLAPSED) --- */
+.sidebar-avancada.collapsed {
+  width: var(--sidebar-width-collapsed);
+}
+.sidebar-avancada.collapsed .sidebar-title {
+  opacity: 0;
+  width: 0;
+}
+.sidebar-avancada.collapsed .link-text {
+  opacity: 0;
+  width: 0;
+  margin-left: 0;
+}
+.sidebar-avancada.collapsed .toggle-btn {
+  transform: rotate(180deg);
+}
+.sidebar-avancada.collapsed .nav-link {
+  justify-content: center;
 }
 
-.dark-mode .sidebar-modern .nav-link:hover {
-  background-color: #4a90e2;
-  color: #fff;
+/* --- DARK MODE --- */
+.dark-mode .sidebar-avancada {
+  background-color: var(--sidebar-bg-dark);
+  border-right-color: #374151;
+}
+.dark-mode .sidebar-title {
+  color: #f9fafb;
+}
+.dark-mode .nav-link {
+  color: var(--text-dark);
+}
+.dark-mode .nav-link:hover {
+  background-color: var(--hover-bg-dark);
+  color: #f9fafb;
+}
+.dark-mode .nav-link.active {
+  background-color: var(--active-bg-dark);
+  color: var(--active-text-dark);
+}
+.dark-mode .toggle-btn {
+  color: var(--text-dark);
+}
+.dark-mode .toggle-btn:hover {
+  background-color: var(--hover-bg-dark);
+}
+.dark-mode .sidebar-footer {
+  border-top-color: #374151;
 }

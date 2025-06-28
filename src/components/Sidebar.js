@@ -1,24 +1,59 @@
+import React, { useState } from 'react';
+import { NavLink } from 'react-router-dom';
+import '../styles/Sidebar.css'; // O CSS que vamos criar abaixo
 
-import React from 'react';
-import { Link } from 'react-router-dom';
-import '../styles/Sidebar.css'; 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faThLarge, faBook, faPlus, faUser, faSignOutAlt, faChevronLeft, faInfoCircle
+} from '@fortawesome/free-solid-svg-icons';
 
 const Sidebar = ({ decoded }) => {
+  const [isCollapsed, setIsCollapsed] = useState(false);
+
+  const handleToggleSidebar = () => {
+    setIsCollapsed(!isCollapsed);
+  };
+
   return (
-    <div className="sidebar-modern glass-effect p-4">
-      <Link to="/dashboard" style={{ textDecoration: 'none', color: 'inherit' }}>
-  <h4 className="sidebar-title">📚 Biblioteca Pública</h4>
-</Link>      
-      {/* <h4 className="sidebar-title">📚 Biblioteca Pública</h4> */}
-      <ul className="nav flex-column gap-3 mt-4">
-        <li><Link to="/lista-livros" className="nav-link">📖 Visualizar Livros</Link></li>
+    <aside className={`sidebar-avancada ${isCollapsed ? 'collapsed' : ''}`}>
+      <div className="sidebar-header">
+        <div className="logo-container">
+          <span className="logo">📚</span>
+          <h3 className="sidebar-title">Biblioteca</h3>
+        </div>
+        <button className="toggle-btn" onClick={handleToggleSidebar}>
+          <FontAwesomeIcon icon={faChevronLeft} />
+        </button>
+      </div>
+
+      <nav className="sidebar-nav">
+        <NavLink to="/dashboard" className="nav-link">
+          <FontAwesomeIcon icon={faThLarge} className="nav-icon" />
+          <span className="link-text">Dashboard</span>
+        </NavLink>
+        <NavLink to="/lista-livros" className="nav-link">
+          <FontAwesomeIcon icon={faBook} className="nav-icon" />
+          <span className="link-text">Meus Livros</span>
+        </NavLink>
         {decoded && decoded.role === "ROLE_ADMIN" && (
-          <li><Link to="/cadastro-livros" className="nav-link">➕ Cadastrar Livro</Link></li>
+          <NavLink to="/cadastro-livros" className="nav-link">
+            <FontAwesomeIcon icon={faPlus} className="nav-icon" />
+            <span className="link-text">Cadastrar Livro</span>
+          </NavLink>
         )}
-        <li><Link to="/perfil" className="nav-link">👤 Meu Perfil</Link></li>
-        <li><Link to="/" className="nav-link">🚪 Sair</Link></li>
-      </ul>
-    </div>
+      </nav>
+
+      <div className="sidebar-footer">
+        <NavLink to="/perfil" className="nav-link">
+          <FontAwesomeIcon icon={faUser} className="nav-icon" />
+          <span className="link-text">Meu Perfil</span>
+        </NavLink>
+        <NavLink to="/" className="nav-link">
+          <FontAwesomeIcon icon={faSignOutAlt} className="nav-icon" />
+          <span className="link-text">Sair</span>
+        </NavLink>
+      </div>
+    </aside>
   );
 };
 

@@ -1,8 +1,8 @@
-// src/pages/DashboardBiblioteca.js (VERSÃO FINAL)
+// src/pages/DashboardBiblioteca.js
 
 import React, { useState, useEffect } from 'react';
 import '../styles/Dashboard.css'; 
-import AutoresCarousel from '../components/AutoresCarousel'; // 1. Importa o novo componente
+import AutorSlider from '../components/AutorSlider'; // 1. Importa o novo componente
 
 const DashboardBiblioteca = () => {
   const [nomeUsuario, setNomeUsuario] = useState('');
@@ -13,14 +13,13 @@ const DashboardBiblioteca = () => {
   }, []);
 
   return (
-    // O React.Fragment <> continua sendo uma boa prática aqui
     <>
       <header className="dashboard-header d-flex justify-content-between align-items-center mb-4">
         <h2>Olá, {nomeUsuario}!</h2>
       </header>
       
-      {/* 2. Aqui, o carrossel substitui o placeholder antigo */}
-      <AutoresCarousel />
+      {/* 2. Usa o novo slider no lugar do componente de livro */}
+      <AutorSlider />
       
     </>
   );

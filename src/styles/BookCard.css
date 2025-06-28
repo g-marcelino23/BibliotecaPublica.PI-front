@@ -16,7 +16,7 @@
   width: 280px; /* Largura do card - ajuste conforme necessário */
   display: flex;
   flex-direction: column;
-  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out, background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .book-card:hover {
@@ -27,13 +27,15 @@
 .book-card-cover {
   width: 100%;
   height: 220px; /* Altura da imagem da capa - ajuste */
-  object-fit: contain; /* Garante que a imagem caiba na área sem distorcer ou cortar */
+  object-fit: contain;
   border-radius: 4px;
   margin-bottom: 15px;
-  border: 0px solid #eee;
+  border: 1px solid #eee; /* Borda sutil para a imagem */
+  transition: border-color 0.3s ease;
 }
+
 .book-card-info {
-  flex-grow: 1; /* Faz esta seção ocupar o espaço restante */
+  flex-grow: 1;
   margin-bottom: 15px;
 }
 
@@ -43,34 +45,35 @@
   color: #333;
   margin-top: 0;
   margin-bottom: 5px;
-  /* Limita o título a 2 linhas e adiciona reticências */
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;  
   overflow: hidden;
   text-overflow: ellipsis;
-  height: 2.4em; /* Ajuste conforme o line-height e font-size */
+  height: 2.4em;
   line-height: 1.2em;
+  transition: color 0.3s ease;
 }
 
 .book-card-author {
   font-size: 0.9em;
   color: #555;
   margin-bottom: 10px;
+  transition: color 0.3s ease;
 }
 
 .book-card-description {
   font-size: 0.85em;
   color: #666;
   line-height: 1.4;
-  /* Limita a descrição a 3 linhas e adiciona reticências */
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;  
   overflow: hidden;
   text-overflow: ellipsis;
-  height: 4.2em; /* Ajuste conforme o line-height e font-size */
+  height: 4.2em;
   margin-bottom: 10px;
+  transition: color 0.3s ease;
 }
 
 .book-card-pdf-link {
@@ -79,6 +82,7 @@
   color: #007bff;
   text-decoration: none;
   margin-top: 5px;
+  transition: color 0.3s ease;
 }
 
 .book-card-pdf-link:hover {
@@ -87,10 +91,11 @@
 
 .book-card-actions {
   display: flex;
-  justify-content: space-between; /* Ou space-around para mais espaço */
-  margin-top: auto; /* Empurra as ações para o final do card */
+  justify-content: space-between;
+  margin-top: auto;
   padding-top: 10px;
-  border-top: 1px solid #eee; /* Linha sutil acima das ações */
+  border-top: 1px solid #eee;
+  transition: border-color 0.3s ease;
 }
 
 .book-card-button {
@@ -103,7 +108,7 @@
 }
 
 .book-card-button.edit {
-  background-color: #007bff; /* Azul */
+  background-color: #007bff;
   color: white;
 }
 
@@ -112,10 +117,50 @@
 }
 
 .book-card-button.delete {
-  background-color: #dc3545; /* Vermelho */
+  background-color: #dc3545;
   color: white;
 }
 
 .book-card-button.delete:hover {
   background-color: #c82333;
+}
+
+
+/*
+/**********************************************
+* --- DARK MODE STYLES ---
+**********************************************/
+
+.dark-mode .book-card {
+  background-color: #2c3238;
+  border-color: #444;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.dark-mode .book-card:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+.dark-mode .book-card-cover {
+  border-color: #444;
+}
+
+.dark-mode .book-card-title {
+  color: #f1f1f1;
+}
+
+.dark-mode .book-card-author {
+  color: #b0b0b0;
+}
+
+.dark-mode .book-card-description {
+  color: #a9a9a9;
+}
+
+.dark-mode .book-card-pdf-link {
+  color: #58a6ff; /* Azul mais brilhante para melhor contraste */
+}
+
+.dark-mode .book-card-actions {
+  border-color: #444;
 }

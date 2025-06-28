@@ -1,73 +1,245 @@
-/* Opção 1: Estilo Minimalista e Moderno */
+/* src/styles/CadastroLivros.css */
+
+/* Fonte do Google Fonts para um toque mais moderno */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+body {
+  background-color: #f0f2f5;
+  transition: background-color 0.3s ease;
+}
+
 .cadastro-livro-container {
-    max-width: 550px; /* Levemente mais estreito para um look mais contido */
-    margin: 60px auto;
-    background: #ffffff; /* Fundo branco puro */
-    padding: 45px;
-    border-radius: 8px; /* Bordas um pouco menos arredondadas */
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08); /* Sombra mais suave */
-    font-family: 'Roboto', sans-serif; /* Fonte sans-serif moderna */
+  max-width: 900px;
+  margin: 50px auto;
+  padding: 40px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.07);
+  font-family: 'Poppins', sans-serif;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .cadastro-titulo {
-    text-align: center;
-    margin-bottom: 35px;
-    font-size: 1.8rem; /* Título um pouco menor, mais elegante */
-    color: #333; /* Cor escura principal */
-    font-weight: 500; /* Peso médio para o título */
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 2rem;
+  font-weight: 600;
+  color: #1c1e21;
+  transition: color 0.3s ease;
 }
 
-.cadastro-form label {
-    display: block;
-    margin-top: 25px; /* Mais espaçamento acima do label */
-    font-weight: 500; /* Peso médio para o label */
-    color: #555; /* Cinza escuro para labels */
-    font-size: 0.9rem; /* Label um pouco menor */
-    margin-bottom: 8px; /* Espaço entre label e input */
+/* --- Layout em Grid para o formulário --- */
+.cadastro-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 25px 30px;
 }
 
-.cadastro-form input,
-.cadastro-form textarea {
-    width: 100%;
-    padding: 12px; /* Padding um pouco maior para inputs */
-    margin-top: 0; /* Remove margin-top, já que o label tem margin-bottom */
-    border-radius: 6px;
-    border: 1px solid #dfe1e5; /* Borda cinza clara */
-    font-size: 1rem;
-    font-family: inherit;
-    background-color: #f8f9fa; /* Fundo levemente acinzentado para inputs */
-    transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+/* --- Estilos para os grupos de formulário --- */
+.form-grupo {
+  display: flex;
+  flex-direction: column;
 }
 
-.cadastro-form input:focus,
-.cadastro-form textarea:focus {
-    outline: none;
-    border-color: #007bff; /* Azul para foco */
-    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25); /* Sombra sutil no foco */
-    background-color: #fff;
+.form-grupo.full-width {
+  grid-column: 1 / -1;
 }
 
-.cadastro-form textarea {
-    resize: vertical;
-    min-height: 120px;
+.form-grupo label {
+  font-weight: 500;
+  color: #555;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+  transition: color 0.3s ease;
 }
 
-.cadastro-form button,
-.cadastro-form input[type="button"] {
-    margin-top: 35px;
-    width: 100%;
-    padding: 14px; /* Botão com mais padding */
-    background-color: #007bff; /* Azul moderno */
-    color: white;
-    border: none;
-    border-radius: 6px;
-    font-size: 1rem; /* Tamanho de fonte padrão para o texto do botão */
-    font-weight: 500;
-    cursor: pointer;
-    transition: background-color 0.2s ease-in-out;
+.form-grupo input[type="text"],
+.form-grupo textarea {
+  width: 100%;
+  padding: 12px 15px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-size: 1rem;
+  font-family: inherit;
+  background-color: #fff;
+  color: #222;
+  transition: border-color 0.2s, box-shadow 0.2s, background-color 0.3s ease, color 0.3s ease;
 }
 
-.cadastro-form button:hover,
-.cadastro-form input[type="button"]:hover {
-    background-color: #0056b3; /* Azul mais escuro no hover */
+.form-grupo input[type="text"]:focus,
+.form-grupo textarea:focus {
+  outline: none;
+  border-color: #0d6efd;
+  box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.15);
+}
+
+.form-grupo textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+/* --- Estilo Moderno para Input de Arquivo --- */
+.input-arquivo-customizado {
+  border: 2px dashed #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.2s, background-color 0.2s;
+}
+.input-arquivo-customizado:hover {
+  border-color: #0d6efd;
+  background-color: #f8f9fa;
+}
+.input-arquivo-customizado span {
+  color: #555;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+.input-arquivo-customizado input[type="file"] {
+  display: none;
+}
+.nome-arquivo {
+  margin-top: 10px;
+  font-style: italic;
+  font-size: 0.85rem;
+  color: #333;
+  word-break: break-all;
+  transition: color 0.3s ease;
+}
+
+/* --- Container e Estilos de Botões --- */
+.botoes-container {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+  margin-top: 20px;
+  border-top: 1px solid #eee;
+  padding-top: 25px;
+  transition: border-color 0.3s ease;
+}
+
+.btn {
+  padding: 10px 25px;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.1s, box-shadow 0.2s, background-color 0.3s, color 0.3s;
+}
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.btn-primario,
+.btn-perigo,
+.btn-secundario {
+  background-color: #0d6efd;
+  color: white;
+}
+.btn-perigo { background-color: #dc3545; }
+.btn-secundario { background-color: #6c757d; }
+
+.btn-neutro {
+  background-color: #f8f9fa;
+  color: #333;
+  border: 1px solid #ddd;
+}
+
+/* --- Mensagens de Feedback --- */
+.feedback {
+  grid-column: 1 / -1;
+  padding: 15px;
+  margin-bottom: 0;
+  border-radius: 8px;
+  text-align: center;
+  font-weight: 500;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+.feedback-sucesso {
+  background-color: #d1e7dd;
+  color: #0f5132;
+}
+.feedback-erro {
+  background-color: #f8d7da;
+  color: #842029;
+}
+
+
+/*
+/**********************************************
+* --- DARK MODE STYLES ---
+**********************************************/
+
+.dark-mode body {
+  background-color: #1a1a1a;
+}
+
+.dark-mode .cadastro-livro-container {
+  background: #2c3238;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+.dark-mode .cadastro-titulo {
+  color: #f1f1f1;
+}
+
+.dark-mode .form-grupo label {
+  color: #b0b0b0;
+}
+
+.dark-mode .form-grupo input[type="text"],
+.dark-mode .form-grupo textarea {
+  background-color: #3a4045;
+  border-color: #555;
+  color: #e0e0e0;
+  color-scheme: dark; /* Ajuda o navegador com autofill e outros UIs */
+}
+
+.dark-mode .form-grupo input[type="text"]:focus,
+.dark-mode .form-grupo textarea:focus {
+  box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.25);
+}
+
+.dark-mode .input-arquivo-customizado {
+  border-color: #555;
+}
+
+.dark-mode .input-arquivo-customizado:hover {
+  background-color: #3a4045;
+}
+
+.dark-mode .input-arquivo-customizado span {
+  color: #b0b0b0;
+}
+
+.dark-mode .nome-arquivo {
+  color: #ccc;
+}
+
+.dark-mode .botoes-container {
+  border-color: #444;
+}
+
+.dark-mode .btn-neutro {
+  background-color: #4a5157;
+  color: #e0e0e0;
+  border-color: #666;
+}
+
+.dark-mode .btn:hover {
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+}
+
+.dark-mode .feedback-sucesso {
+  background-color: rgba(25, 135, 84, 0.2);
+  color: #7ee2b8;
+}
+
+.dark-mode .feedback-erro {
+  background-color: rgba(220, 53, 69, 0.2);
+  color: #f7a2ab;
 }

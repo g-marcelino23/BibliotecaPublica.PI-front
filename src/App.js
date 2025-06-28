@@ -1,7 +1,9 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
+
 // Importe o novo componente de Layout
 import Layout from './components/Layout'; 
+
 
 // Importe suas páginas
 import Home from './pages/Home';
@@ -12,6 +14,7 @@ import ListaLivrosPage from './pages/ListaLivrosPage';
 import CadastroLivros from './pages/CadastroLivros';
 // Supondo que você tenha uma página de Perfil também
   import Perfil from './pages/Perfil'; 
+
 
 function App() {
   return (
@@ -42,6 +45,7 @@ function App() {
         <Route path="/perfil" element={<Layout><Perfil /></Layout>} /> 
         
       </Routes>
+     
     </Router>
   );
 }

@@ -1,5 +1,4 @@
-// src/components/BookCard.js
-import '../styles/BookCard.css'; // Vamos criar este arquivo CSS
+import '../styles/BookCard.css'; 
 import { jwtDecode } from 'jwt-decode';
 import { useState, useEffect} from 'react';
 
@@ -20,13 +19,13 @@ function BookCard({ livro, onEdit, onDelete }) {
   
   
 
-  // Constrói a URL da capa corretamente
+  
   const capaUrl = livro.caminhoCapa
-    ? `http://localhost:8080/api/livro/capa/${encodeURIComponent(livro.titulo)}` // Ou use livro.caminhoCapa se for o nome do arquivo
+    ? `http://localhost:8080/api/livro/capa/${encodeURIComponent(livro.titulo)}` 
     : defaultCover;
 
   const handleImageError = (e) => {
-    e.target.onerror = null; // Previne loop infinito se a imagem padrão também falhar
+    e.target.onerror = null; 
     e.target.src = defaultCover;
   };
 
@@ -44,7 +43,7 @@ function BookCard({ livro, onEdit, onDelete }) {
         <p className="book-card-description">{livro.descricao || "Sem descrição."}</p>
         {livro.caminhoArquivo && (
           <a
-            href={`http://localhost:8080/api/livro/download/${encodeURIComponent(livro.titulo)}`} // Ou use o ID/caminhoArquivo
+            href={`http://localhost:8080/api/livro/download/${encodeURIComponent(livro.titulo)}`} 
             target="_blank"
             rel="noopener noreferrer"
             className="book-card-pdf-link"
