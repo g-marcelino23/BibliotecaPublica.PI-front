@@ -1,9 +1,8 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-
 // Importe o novo componente de Layout
 import Layout from './components/Layout'; 
-
+import FavoritosPage from './pages/FavoritosPage'; // A importação já estava aqui, ótimo!
 
 // Importe suas páginas
 import Home from './pages/Home';
@@ -12,9 +11,7 @@ import LoginUsuario from './pages/LoginUsuario';
 import Dashboard from './pages/Dashboard';
 import ListaLivrosPage from './pages/ListaLivrosPage';
 import CadastroLivros from './pages/CadastroLivros';
-// Supondo que você tenha uma página de Perfil também
-  import Perfil from './pages/Perfil'; 
-
+import Perfil from './pages/Perfil'; 
 
 function App() {
   return (
@@ -25,7 +22,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login-usuario" element={<LoginUsuario />} />
         <Route path="/cadastro-usuario" element={<CadastroUsuario />} />
-
+        
         {/* --- ROTAS PRIVADAS (Com Sidebar) --- */}
         {/* Todas as rotas aqui dentro terão a sidebar e o dark mode automaticamente */}
         <Route 
@@ -40,12 +37,22 @@ function App() {
           path="/cadastro-livros" 
           element={<Layout><CadastroLivros /></Layout>} 
         />
-        <Route path="/editar/:livroId" element={<CadastroLivros />} />
-         
-        <Route path="/perfil" element={<Layout><Perfil /></Layout>} /> 
+        <Route 
+          path="/editar/:livroId" 
+          element={<Layout><CadastroLivros /></Layout>} // Envolvi esta rota no Layout também para consistência
+        />
+        <Route 
+          path="/perfil" 
+          element={<Layout><Perfil /></Layout>} 
+        /> 
+        
+        {/* ROTA DE FAVORITOS ADICIONADA AQUI, DENTRO DO LAYOUT */}
+        <Route 
+          path="/favoritos" 
+          element={<Layout><FavoritosPage /></Layout>} 
+        />
         
       </Routes>
-     
     </Router>
   );
 }

@@ -1,300 +1,471 @@
 /* Paleta de cores e variáveis */
 :root {
-    --primary-color: #4A90E2; /* Azul mais vibrante */
-    --secondary-color: #50E3C2; /* Verde água/ciano para destaque */
-    --text-color: #333; /* Preto quase escuro para texto */
-    --light-bg-color: #e0e6ed; /* Um cinza azulado bem suave para o fundo */
-    --white: #ffffff;
-    --gray-border: #dcdcdc; /* Cinza suave para bordas */
-    --link-color: #4A90E2;
-    --error-bg: #ffe0e0;
-    --error-text: #d63031;
+  --primary-color: #8b4513; /* Marrom madeira */
+  --secondary-color: #a0522d; /* Marrom claro */
+  --accent-color: #228b22; /* Verde floresta */
+  --text-color: #2f1b14; /* Marrom escuro para texto */
+  --text-light: #8b7355; /* Marrom acinzentado */
+  --background-color: #faf6f0; /* Bege papel antigo */
+  --white: #ffffff;
+  --border-color: #d2b48c; /* Tan claro */
+  --error-bg: #fef2f2;
+  --error-text: #dc2626;
+  --success-bg: #f0fdf4;
+  --success-text: #16a34a;
 
-    --font-family-base: 'Arial', sans-serif; /* Ou 'Montserrat', sans-serif se ainda quiser */
-    --border-radius-sm: 6px;
-    --border-radius-md: 12px;
+  /* mudando fonte para tema mais acadêmico */
+  --font-family-base: "Crimson Text", "Georgia", "Times New Roman", serif;
+  --font-family-accent: "Playfair Display", "Georgia", serif;
+  --border-radius-sm: 8px;
+  --border-radius-md: 12px;
+  --border-radius-lg: 16px;
+  --shadow-sm: 0 2px 4px 0 rgba(139, 69, 19, 0.1);
+  --shadow-md: 0 4px 8px -1px rgba(139, 69, 19, 0.15);
+  --shadow-lg: 0 10px 20px -3px rgba(139, 69, 19, 0.2);
 }
 
 /* --- Global Reset and Base Styles --- */
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 body {
-    margin: 0;
-    font-family: var(--font-family-base);
-    color: var(--text-color);
+  margin: 0;
+  font-family: var(--font-family-base);
+  color: var(--text-color);
+  background-color: var(--background-color);
 }
 
 /* --- Home Wrapper --- */
 .home-container {
-    height: 100vh;
-    background-color: var(--light-bg-color);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    box-sizing: border-box;
-    overflow: hidden;
+  min-height: 100vh;
+  background: linear-gradient(135deg, var(--background-color) 0%, #f5f0e8 100%);
+  background-image: radial-gradient(circle at 25% 25%, rgba(139, 69, 19, 0.02) 0%, transparent 50%),
+    radial-gradient(circle at 75% 75%, rgba(160, 82, 45, 0.02) 0%, transparent 50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 /* --- Content Wrapper (para as duas colunas) --- */
 .home-content {
-    display: flex;
-    max-width: 1200px;
-    width: 100%;
-    height: 700px; /* Altura um pouco reduzida para parecer mais "quadrado" */
-    box-shadow: 0 8px 30px rgba(0,0,0,0.1);
-    border-radius: var(--border-radius-md);
-    overflow: hidden;
-    background: var(--white);
+  display: flex;
+  max-width: 1100px;
+  width: 100%;
+  min-height: 600px;
+  background: var(--white);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+  /* adicionando borda sutil tema biblioteca */
+  border: 2px solid var(--border-color);
 }
 
-/* --- Coluna Esquerda: Imagem e Texto --- */
-.home-media {
-    flex: 1.2; /* Dando um pouco mais de espaço para a imagem */
-    position: relative;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: var(--black); /* Fundo preto caso a imagem não carregue */
+/* Seção do vídeo substituindo a seção de branding */
+.video-section {
+  flex: 1.2;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.background-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    filter: brightness(0.3); /* Imagem mais escura para o texto branco se destacar */
-    transition: filter 0.5s ease;
+.background-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
 }
 
-.media-overlay-text {
-    position: absolute;
-    color: var(--white);
-    padding: 20px;
-    max-width: 85%;
-    text-align: center;
-    z-index: 2;
-    background: rgba(0, 0, 0, 0.3); /* Fundo semi-transparente para o texto */
-    border-radius: var(--border-radius-sm);
-    backdrop-filter: blur(2px); /* Efeito de blur */
+.video-overlay {
+  position: relative;
+  z-index: 2;
+  background: rgba(139, 69, 19, 0.85);
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 40px;
+  color: var(--white);
 }
 
-.media-overlay-text h1 {
-    font-size: 2.3rem;
-    margin-bottom: 15px;
-    font-weight: bold;
-    line-height: 1.2;
+.brand-content {
+  max-width: 400px;
+  text-align: center;
+  position: relative;
+  z-index: 3;
 }
 
-.media-overlay-text p {
-    font-size: 1.2rem;
-    line-height: 1.5;
-    font-weight: lighter;
+/* mudando classe para tema biblioteca */
+.library-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 40px;
+}
+
+.logo-icon {
+  font-size: 3.5rem;
+  color: var(--white);
+  /* adicionando sombra sutil no ícone */
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+/* mudando fonte do título para mais elegante */
+.library-logo h1 {
+  font-size: 2.8rem;
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: -0.025em;
+  font-family: var(--font-family-accent);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.brand-info h2 {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: rgba(255, 255, 255, 0.95);
+  font-family: var(--font-family-accent);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.brand-info p {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  margin-bottom: 40px;
+  color: rgba(255, 255, 255, 0.9);
+  font-style: italic;
+}
+
+.features-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 18px 24px;
+  /* mudando estilo dos cards para tema mais elegante */
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: var(--border-radius-sm);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.feature-item:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.feature-icon {
+  font-size: 1.3rem;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.feature-item span {
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 1.05rem;
 }
 
 /* --- Coluna Direita: Formulário de Autenticação --- */
 .auth-form-section {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 40px;
-    background-color: var(--white);
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 60px 40px;
+  background-color: var(--white);
 }
 
 /* --- Estilo do Formulário --- */
 .auth-form {
-    width: 100%;
-    max-width: 380px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 18px;
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
 
-.auth-form h2 {
-    font-size: 2rem;
-    margin-bottom: 25px;
-    color: var(--text-color);
-    display: flex;
-    align-items: center;
-    gap: 10px;
+.form-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.form-icon {
+  font-size: 2.5rem;
+  color: var(--primary-color);
+  margin-bottom: 15px;
+}
+
+.form-header h2 {
+  font-size: 1.9rem;
+  font-weight: 700;
+  margin: 0 0 8px 0;
+  color: var(--text-color);
+  /* usando fonte mais elegante para títulos */
+  font-family: var(--font-family-accent);
+}
+
+.form-header p {
+  font-size: 1rem;
+  color: var(--text-light);
+  margin: 0;
+  font-style: italic;
 }
 
 /* --- Campos de Input com Ícones --- */
 .input-group {
-    position: relative;
-    width: 100%;
+  position: relative;
+  width: 100%;
 }
 
 .input-group input,
 .input-group select {
-    width: 100%;
-    padding: 12px 12px 12px 45px;
-    font-size: 1rem;
-    border: 1px solid var(--gray-border);
-    border-radius: var(--border-radius-sm);
-    outline: none;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    background-color: #fcfcfc;
-    color: var(--text-color);
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
+  width: 100%;
+  padding: 16px 16px 16px 50px;
+  font-size: 1rem;
+  border: 2px solid var(--border-color);
+  border-radius: var(--border-radius-sm);
+  outline: none;
+  transition: all 0.3s ease;
+  background-color: var(--white);
+  color: var(--text-color);
+  font-family: var(--font-family-base);
+  /* adicionando sombra interna sutil */
+  box-shadow: inset 0 1px 3px rgba(139, 69, 19, 0.1);
 }
 
 .input-group input:focus,
 .input-group select:focus {
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(139, 69, 19, 0.15), inset 0 1px 3px rgba(139, 69, 19, 0.1);
 }
 
-.input-group svg {
-    position: absolute;
-    top: 50%;
-    left: 15px;
-    transform: translateY(-50%);
-    color: #888;
-    font-size: 1.1rem;
+.input-icon {
+  position: absolute;
+  top: 50%;
+  left: 18px;
+  transform: translateY(-50%);
+  color: var(--text-light);
+  font-size: 1.1rem;
+  z-index: 1;
 }
 
-/* Seta do select */
 .input-group select {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23888' width='24px' height='24px'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3Cpath d='M0 0h24v24H0z' fill='none'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 15px center;
-    background-size: 20px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%236b7280' width='20px' height='20px'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3Cpath d='M0 0h24v24H0z' fill='none'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  background-size: 20px;
+  appearance: none;
 }
-
 
 /* --- Botões --- */
 .btn {
-    width: 100%;
-    padding: 12px;
-    font-size: 1.1rem;
-    border-radius: var(--border-radius-sm);
-    cursor: pointer;
-    border: none;
-    font-weight: 600;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+  width: 100%;
+  padding: 16px;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: var(--border-radius-sm);
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s ease;
+  font-family: var(--font-family-base);
+  letter-spacing: 0.025em;
 }
 
 .btn-primary {
-    background-color: var(--primary-color);
-    color: var(--white);
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+  color: var(--white);
+  box-shadow: var(--shadow-sm);
+  /* adicionando textura sutil */
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.btn-primary:hover::before {
+  left: 100%;
 }
 
 .btn-primary:hover {
-    background-color: #357ABD;
-    transform: translateY(-2px);
+  background: linear-gradient(135deg, #7a3f12 0%, #8b4513 100%);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
 }
 
 .btn-success {
-    background-color: var(--secondary-color);
-    color: var(--text-color);
+  background: linear-gradient(135deg, var(--accent-color) 0%, #32cd32 100%);
+  color: var(--white);
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-success::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.btn-success:hover::before {
+  left: 100%;
 }
 
 .btn-success:hover {
-    background-color: #3fc0a3;
-    transform: translateY(-2px);
+  background: linear-gradient(135deg, #1e7e1e 0%, #228b22 100%);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
 }
 
 /* --- Texto para trocar entre login/cadastro --- */
 .switch-form-text {
-    text-align: center;
-    margin-top: 20px;
-    font-size: 0.95rem;
-    color: #666;
+  text-align: center;
+  font-size: 0.95rem;
+  color: var(--text-light);
+  margin-top: 10px;
 }
 
 .link-text {
-    color: var(--link-color);
-    cursor: pointer;
-    text-decoration: none;
-    font-weight: 600;
-    transition: color 0.3s ease, text-decoration 0.3s ease;
+  color: var(--primary-color);
+  cursor: pointer;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s ease;
 }
 
 .link-text:hover {
-    color: #357ABD;
-    text-decoration: underline;
+  color: var(--secondary-color);
+  text-decoration: underline;
 }
 
 /* --- Mensagem de erro --- */
 .alert-message {
-    margin-bottom: 15px;
-    padding: 10px 15px;
-    border-radius: 6px;
-    font-size: 0.9rem;
-    text-align: center;
-    width: 100%;
-    box-sizing: border-box;
+  padding: 12px 16px;
+  border-radius: var(--border-radius-sm);
+  font-size: 0.9rem;
+  text-align: center;
+  width: 100%;
+  box-sizing: border-box;
+  font-weight: 500;
 }
 
 .alert-message.error {
-    background-color: var(--error-bg);
-    color: var(--error-text);
-    border: 1px solid var(--error-text);
+  background-color: var(--error-bg);
+  color: var(--error-text);
+  border: 1px solid #fecaca;
 }
 
 /* --- Animação simples ao trocar formulário --- */
 .animate {
-    animation: fadeIn 0.5s ease;
+  animation: fadeInUp 0.6s ease-out;
 }
 
-@keyframes fadeIn {
-    from {opacity: 0;}
-    to {opacity: 1;}
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* --- Responsividade --- */
-@media(max-width: 900px) {
-    .home-content {
-        flex-direction: column;
-        height: auto;
-        max-width: 90%;
-        margin-top: 20px;
-        margin-bottom: 20px;
-        box-shadow: none;
-        border-radius: 0;
-    }
-    .home-media, .auth-form-section {
-        flex: none;
-        width: 100%;
-    }
-    .home-media {
-        height: 250px;
-        border-bottom-left-radius: 0;
-        border-bottom-right-radius: 0;
-    }
-    .media-overlay-text {
-        padding: 20px;
-        max-width: 90%;
-    }
-    .media-overlay-text h1 {
-        font-size: 1.8rem;
-    }
-    .media-overlay-text p {
-        font-size: 1rem;
-    }
-    .auth-form-section {
-        padding: 30px 20px;
-    }
+@media (max-width: 900px) {
+  .home-content {
+    flex-direction: column;
+    max-width: 95%;
+    min-height: auto;
+  }
+
+  /* Ajustando responsividade para seção de vídeo */
+  .video-section {
+    min-height: 300px;
+  }
+
+  .video-overlay {
+    padding: 40px 30px;
+  }
+
+  .brand-content {
+    max-width: 100%;
+  }
+
+  .library-logo h1 {
+    font-size: 2rem;
+  }
+
+  .brand-info h2 {
+    font-size: 1.5rem;
+  }
+
+  .features-list {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .feature-item {
+    flex: 1;
+    min-width: 140px;
+    padding: 12px 16px;
+  }
+
+  .auth-form-section {
+    padding: 40px 30px;
+  }
 }
 
-@media(max-width: 500px) {
-    .home-container {
-        padding: 10px;
-    }
-    .auth-form h2 {
-        font-size: 1.8rem;
-    }
-    .media-overlay-text h1 {
-        font-size: 1.5rem;
-    }
-    .media-overlay-text p {
-        font-size: 0.9rem;
-    }
+@media (max-width: 500px) {
+  .home-container {
+    padding: 15px;
+  }
+
+  /* Ajustando vídeo para mobile */
+  .video-overlay {
+    padding: 30px 20px;
+  }
+
+  .auth-form-section {
+    padding: 30px 20px;
+  }
+
+  .form-header h2 {
+    font-size: 1.6rem;
+  }
+
+  .features-list {
+    flex-direction: column;
+  }
 }

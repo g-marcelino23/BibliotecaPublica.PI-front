@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import '../styles/Sidebar.css'; // O CSS que vamos criar abaixo
+import '../styles/Sidebar.css';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faThLarge, faBook, faPlus, faUser, faSignOutAlt, faChevronLeft, faInfoCircle
+  faThLarge, faBook, faPlus, faUser, faSignOutAlt, faChevronLeft, faInfoCircle,
+  faHeart // ÍCONE ADICIONADO
 } from '@fortawesome/free-solid-svg-icons';
 
 const Sidebar = ({ decoded }) => {
@@ -35,6 +36,13 @@ const Sidebar = ({ decoded }) => {
           <FontAwesomeIcon icon={faBook} className="nav-icon" />
           <span className="link-text">Meus Livros</span>
         </NavLink>
+
+        {/* LINK ADICIONADO AQUI */}
+        <NavLink to="/favoritos" className="nav-link">
+          <FontAwesomeIcon icon={faHeart} className="nav-icon" />
+          <span className="link-text">Meus Favoritos</span>
+        </NavLink>
+
         {decoded && decoded.role === "ROLE_ADMIN" && (
           <NavLink to="/cadastro-livros" className="nav-link">
             <FontAwesomeIcon icon={faPlus} className="nav-icon" />
