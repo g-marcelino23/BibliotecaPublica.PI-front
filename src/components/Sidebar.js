@@ -5,7 +5,8 @@ import '../styles/Sidebar.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faThLarge, faBook, faPlus, faUser, faSignOutAlt, faChevronLeft, faInfoCircle,
-  faHeart // ÍCONE ADICIONADO
+  faHeart, // ÍCONE ADICIONADO
+  faList
 } from '@fortawesome/free-solid-svg-icons';
 
 const Sidebar = ({ decoded }) => {
@@ -41,6 +42,11 @@ const Sidebar = ({ decoded }) => {
         <NavLink to="/favoritos" className="nav-link">
           <FontAwesomeIcon icon={faHeart} className="nav-icon" />
           <span className="link-text">Meus Favoritos</span>
+        </NavLink>
+
+          <NavLink to="/categorias" className="nav-link">
+          <FontAwesomeIcon icon={faList} className="nav-icon" />
+          <span className="link-text">Categorias</span>
         </NavLink>
 
         {decoded && decoded.role === "ROLE_ADMIN" && (

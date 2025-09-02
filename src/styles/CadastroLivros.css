@@ -54,7 +54,8 @@ body {
 }
 
 .form-grupo input[type="text"],
-.form-grupo textarea {
+.form-grupo textarea,
+.form-grupo select {
   width: 100%;
   padding: 12px 15px;
   border-radius: 8px;

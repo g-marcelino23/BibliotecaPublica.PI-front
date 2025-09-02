@@ -12,6 +12,7 @@ import Dashboard from './pages/Dashboard';
 import ListaLivrosPage from './pages/ListaLivrosPage';
 import CadastroLivros from './pages/CadastroLivros';
 import Perfil from './pages/Perfil'; 
+import CategoriasPage from './pages/CategoriasPage'
 
 function App() {
   return (
@@ -50,6 +51,11 @@ function App() {
         <Route 
           path="/favoritos" 
           element={<Layout><FavoritosPage /></Layout>} 
+        />
+
+        <Route 
+          path="/categorias" 
+          element={<Layout><CategoriasPage/></Layout>} 
         />
         
       </Routes>

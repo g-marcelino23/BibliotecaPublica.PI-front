@@ -2,7 +2,9 @@
 import React, { useEffect, useState, useRef } from 'react';
 import '../styles/CadastroLivros.css';
 import api from '../services/api.js';
+import apiUsuario from '../services/usuarioApi.js';
 import { useParams, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 function CadastroLivro() {
   const { livroId } = useParams();
@@ -17,7 +19,8 @@ function CadastroLivro() {
     pdf: null,
     capa: null,
     caminhoArquivo: '',
-    caminhoCapa: ''
+    caminhoCapa: '',
+    categoria: ''
   };
 
   const inputPdfRef = useRef(null);
@@ -25,6 +28,9 @@ function CadastroLivro() {
   const [objLivro, setObjLivro] = useState(initialStateLivro);
   const [isEditMode, setIsEditMode] = useState(false);
   const [feedback, setFeedback] = useState({ message: '', type: '' });
+
+const [categorias, setCategorias] = useState([])
+
 
   // NOVA FUNÇÃO APENAS PARA LIMPAR OS CAMPOS
   const limparFormulario = () => {
@@ -63,6 +69,19 @@ function CadastroLivro() {
     }
   }, [livroId, token]);
 
+
+  useEffect(() => {
+  const carregarCategorias = async ()=> {
+    try {
+      const resposta = await apiUsuario.get("/categoria");
+      setCategorias(resposta.data);
+    } catch(err) {
+      console.log(err.message);
+    }
+  };
+  carregarCategorias();
+}, []);
+
   // FUNÇÃO ATUALIZADA
   const limparFormularioENavegar = (navegar = true) => {
     limparFormulario(); // Reutiliza a nova função
@@ -93,6 +112,7 @@ function CadastroLivro() {
     formData.append('titulo', objLivro.titulo);
     formData.append('autor', objLivro.autor);
     formData.append('descricao', objLivro.descricao);
+    formData.append('categoria', objLivro.categoria)
 
     if (objLivro.pdf instanceof File) {
       formData.append('pdf', objLivro.pdf);
@@ -186,7 +206,23 @@ function CadastroLivro() {
           <input id="titulo" type="text" name="titulo" value={objLivro.titulo} onChange={aoDigitar} required />
         </div>
 
-        <div className="form-grupo">
+        <div className='form-grupo'>
+          <label htmlFor="categorias">Categorias</label>
+            {/* <select id='categorias' value={objLivro.categoria} onChange={(e) => setObjLivro({...objLivro, categoria: e.target.value})}> */}
+
+            <select
+              id="categorias"
+              value={objLivro.categoria}
+              onChange={(e) =>
+                setObjLivro({ ...objLivro, categoria: e.target.value })}
+              >
+             <option value="">Selecione uma categoria</option> {categorias.map((cat) => ( <option key={cat} value={cat}> {cat} </option>
+              ))}
+            </select>
+        </div>
+        
+
+        <div className="form-grupo full-width">
           <label htmlFor="autor">Autor</label>
           <input id="autor" type="text" name="autor" value={objLivro.autor} onChange={aoDigitar} required />
         </div>
