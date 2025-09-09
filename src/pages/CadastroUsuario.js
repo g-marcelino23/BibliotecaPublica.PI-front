@@ -6,6 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 const CadastroUsuario = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [dataNascimento, setDataNascimento] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
@@ -13,29 +14,23 @@ const CadastroUsuario = () => {
   const handleRegister = async (e) => {
     e.preventDefault();
     setError('');
-
     try {
       const response = await axios.post('http://localhost:8080/api/auth/register', {
         name,
         email,
         password,
+        dataNascimento, // <- ESSENCIAL para filtro etário!
       });
-
       const { token, name: userName } = response.data;
       localStorage.setItem('token', token);
       localStorage.setItem('userName', userName);
       navigate('/dashboard');
     } catch (err) {
-      console.error('Erro na requisição:', err);
-
       if (err.response) {
-        console.error('Resposta da API:', err.response.data);
         setError(err.response.data.message || 'Erro ao registrar. Verifique os dados e tente novamente.');
       } else if (err.request) {
-        console.error('Sem resposta da API:', err.request);
         setError('Servidor não respondeu. Verifique a conexão.');
       } else {
-        console.error('Erro desconhecido:', err.message);
         setError('Erro inesperado. Tente novamente.');
       }
     }
@@ -54,6 +49,17 @@ const CadastroUsuario = () => {
             <label className="form-label">E-mail</label>
             <input type="email" className="form-control" value={email} onChange={(e) => setEmail(e.target.value)} required />
           </div>
+            <div className="mb-3">
+            <label className="form-label">Data de Nascimento</label>
+            <input
+              type="date"
+              className="form-control"
+              value={dataNascimento}
+              onChange={(e) => setDataNascimento(e.target.value)}
+              required
+            />
+          </div>
+
           <div className="mb-3">
             <label className="form-label">Senha</label>
             <input type="password" className="form-control" value={password} onChange={(e) => setPassword(e.target.value)} required />

@@ -25,6 +25,8 @@ function Home() {
   const [registerPassword, setRegisterPassword] = useState("")
   const [registerRole, setRegisterRole] = useState("USER")
   const [error, setError] = useState("")
+  const [registerDataNascimento, setRegisterDataNascimento] = useState("")
+
 
   const navigate = useNavigate()
 
@@ -60,6 +62,7 @@ function Home() {
         email: registerEmail,
         password: registerPassword,
         role: registerRole,
+        dataNascimento: registerDataNascimento, // <- agora vai junto!
       })
       const { token, name: userName } = response.data
       localStorage.setItem("token", token)
@@ -193,6 +196,16 @@ function Home() {
                   placeholder="Criar senha"
                   value={registerPassword}
                   onChange={(e) => setRegisterPassword(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="input-group">
+                <FaUser className="input-icon" />
+                <input
+                  type="date"
+                  placeholder="Data de nascimento"
+                  value={registerDataNascimento}
+                  onChange={(e) => setRegisterDataNascimento(e.target.value)}
                   required
                 />
               </div>

@@ -6,201 +6,168 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 
 export default function CategoriasPage() {
   const [livros, setLivros] = useState({});
-  const [favoritos, setFavoritos] = useState([])
-  const token = localStorage.getItem("token")
-  const [feedback, setFeedback] = useState({ message: "", type: "" })
-  const[categorias, setCategorias] = useState([])
+  const [favoritos, setFavoritos] = useState([]);
+  const token = localStorage.getItem("token");
+  const [feedback, setFeedback] = useState({ message: "", type: "" });
+  const [categorias, setCategorias] = useState([]);
   const [page, setPage] = useState({});
   const [totalPages, setTotalPages] = useState({});
 
-  useEffect(()=>{
+  // Carrega categorias ao montar
+  useEffect(() => {
     const fetchCategorias = async () => {
-    try {
-      const response = await apiUsuario.get("/categoria/getObjetoCategoria");
-      console.log("Categorias carregadas:", response.data);
-      setCategorias(response.data);
-    } catch (err) {
-      console.error("Não foi possível recuperar as categorias", err);
-    }
-  }
-  fetchCategorias();
-  },[])
+      try {
+        const response = await apiUsuario.get("/categoria/getObjetoCategoria");
+        setCategorias(response.data);
+      } catch (err) {
+        console.error("Não foi possível recuperar as categorias", err);
+      }
+    };
+    fetchCategorias();
+  }, []);
 
-  useEffect(()=>{
-      const paginas = ()=>{
-    if(categorias.length===0){return;}
-    const paginasCategorias = {}
-    for(const categoria of categorias){
+  // Inicializa pages de cada categoria
+  useEffect(() => {
+    if (categorias.length === 0) return;
+    const paginasCategorias = {};
+    for (const categoria of categorias) {
       paginasCategorias[categoria.id] = 0;
     }
     setPage(paginasCategorias);
-  }
-  paginas();
-  },[categorias])
+  }, [categorias]);
 
-
-  useEffect(()=>{
-    const favoritos = async()=>{ if (token) {
-          try {
-            const favoritosResponse = await apiUsuario.get("livro/favoritos")
-            console.log("[v0] Favoritos carregados:", favoritosResponse.data)
-            const favoritosIds = favoritosResponse.data.map((livro) => livro.id)
-            setFavoritos(favoritosIds)
-          } catch (favoritosError) {
-            console.log(
-              "[v0] Erro ao carregar favoritos (não crítico):",
-              favoritosError.response?.status,
-              favoritosError.message,
-            )
-            setFavoritos([]);
-          }
-        }
-    } 
-    favoritos();
-  },[token])
-
+  // Carrega favoritos do usuário
   useEffect(() => {
-    const fetchLivrosPagination = async ()=>{
-      if(categorias.length === 0 || Object.keys(page).length===0){return;}
-      const livrosDict = {};
-      const totalPagesDict = {}
-      for(const categoria of categorias){
-        try{
-          const response = await apiUsuario.get(`/categoria/livrosPagination/categoria?categoria=${categoria.genero}&page=${page[categoria.id]}`)
-          livrosDict[categoria.id] = response.data.content
-          totalPagesDict[categoria.id] = response.data.totalPages;
-        }catch(err){
-          console.error("Erro ao buscar as categorias", err)
+    const favoritos = async () => {
+      if (token) {
+        try {
+          const favoritosResponse = await apiUsuario.get("livro/favoritos");
+          const favoritosIds = favoritosResponse.data.map((livro) => livro.id);
+          setFavoritos(favoritosIds);
+        } catch (err) {
+          setFavoritos([]);
         }
+      }
+    };
+    favoritos();
+  }, [token]);
 
+  // Carrega livros paginados de cada categoria
+  useEffect(() => {
+    const fetchLivrosPagination = async () => {
+      if (categorias.length === 0 || Object.keys(page).length === 0) return;
+      const livrosDict = {};
+      const totalPagesDict = {};
+      for (const categoria of categorias) {
+        try {
+          // Aqui assume-se que o backend SÓ entrega livros permitidos!
+          const response = await apiUsuario.get(
+            `/categoria/livrosPagination/categoria?categoria=${categoria.genero}&page=${page[categoria.id]}`
+          );
+          // Recebe paginação da API
+          livrosDict[categoria.id] = response.data.content || [];
+          totalPagesDict[categoria.id] = response.data.totalPages;
+        } catch (err) {
+          livrosDict[categoria.id] = []; // Garante lista vazia se erro
+          totalPagesDict[categoria.id] = 0;
+        }
       }
       setLivros(livrosDict);
       setTotalPages(totalPagesDict);
-    }
+    };
     fetchLivrosPagination();
+    // eslint-disable-next-line
   }, [categorias, page]);
 
-
-
+  // Favoritar/desfavoritar
   const handleToggleFavorito = async (livroId) => {
-    console.log("[v0] handleToggleFavorito chamada com ID:", livroId)
-    console.log("[v0] Token disponível:", !!token)
-    console.log("[v0] Token completo:", token)
-    console.log("[v0] Favoritos atuais:", favoritos)
-
     if (!token) {
-      console.log("[v0] Usuário não está logado, não pode favoritar")
-      setFeedback({ message: "Você precisa estar logado para favoritar livros.", type: "error" })
-      return
+      setFeedback({ message: "Você precisa estar logado para favoritar livros.", type: "error" });
+      return;
     }
-
-    const isCurrentlyFavorito = favoritos.includes(livroId)
-    console.log("[v0] Livro é favorito atualmente:", isCurrentlyFavorito)
-
-    const originalFavoritos = [...favoritos]
-
+    const isCurrentlyFavorito = favoritos.includes(livroId);
+    const originalFavoritos = [...favoritos];
     if (isCurrentlyFavorito) {
-      setFavoritos((prev) => prev.filter((id) => id !== livroId))
+      setFavoritos((prev) => prev.filter((id) => id !== livroId));
     } else {
-      setFavoritos((prev) => [...prev, livroId])
+      setFavoritos((prev) => [...prev, livroId]);
     }
-
     try {
       if (isCurrentlyFavorito) {
-        console.log("[v0] Removendo dos favoritos...")
-        const deleteUrl = `/livro/favoritos/${livroId}`
-        console.log("[v0] URL DELETE:", deleteUrl)
-        console.log("[v0] Headers DELETE:", { Authorization: `Bearer ${token}` })
-
-        const response = await apiUsuario.delete(deleteUrl)
-        console.log("[v0] Resposta DELETE:", response.status, response.data)
-        setFeedback({ message: "Livro removido dos favoritos!", type: "success" })
+        await apiUsuario.delete(`/livro/favoritos/${livroId}`);
+        setFeedback({ message: "Livro removido dos favoritos!", type: "success" });
       } else {
-        console.log("[v0] Adicionando aos favoritos...")
-        const postUrl = "/livro/favoritos"
-        const postData = { livroId }
-        const postHeaders = { Authorization: `Bearer ${token}` }
-        console.log("[v0] URL POST:", postUrl)
-        console.log("[v0] Data POST:", postData)
-        console.log("[v0] Headers POST:", postHeaders)
-
-        const response = await apiUsuario.post(postUrl, postData)
-        console.log("[v0] Resposta POST:", response.status, response.data)
-        setFeedback({ message: "Livro adicionado aos favoritos!", type: "success" })
+        await apiUsuario.post("/livro/favoritos", { livroId });
+        setFeedback({ message: "Livro adicionado aos favoritos!", type: "success" });
       }
     } catch (error) {
-      console.error("[v0] Erro ao atualizar favorito:", error)
-      console.error("[v0] Status do erro:", error.response?.status)
-      console.error("[v0] Dados do erro:", error.response?.data)
-      console.error("[v0] URL da requisição que falhou:", error.config?.url)
-      console.error("[v0] Método da requisição:", error.config?.method)
-      console.error("[v0] Headers enviados:", error.config?.headers)
-      console.error("[v0] Dados enviados:", error.config?.data)
-
-      setFavoritos(originalFavoritos)
-
-      if (error.response?.status === 403) {
-        setFeedback({ message: "Acesso negado. Verifique se você está logado.", type: "error" })
-      } else {
-        setFeedback({ message: "Erro ao atualizar favoritos. Tente novamente.", type: "error" })
-      }
+      setFavoritos(originalFavoritos);
+      setFeedback({ message: "Erro ao atualizar favoritos. Tente novamente.", type: "error" });
     }
-  }
+  };
 
+  // Paginação esquerda/direita
   const nextPage = (categoriaId) => {
-  setPage((prevPage) => {
-    if (prevPage[categoriaId] < totalPages[categoriaId] - 1) {
-      return {
-        ...prevPage,
-        [categoriaId]: prevPage[categoriaId] + 1
-      };
-    }
-    return prevPage; // não altera se já está na última página
-  });
-};
+    setPage((prevPage) => {
+      if (prevPage[categoriaId] < (totalPages[categoriaId] || 1) - 1) {
+        return {
+          ...prevPage,
+          [categoriaId]: prevPage[categoriaId] + 1,
+        };
+      }
+      return prevPage;
+    });
+  };
+  const prevPage = (categoriaId) => {
+    setPage((prevPage) => {
+      if (prevPage[categoriaId] > 0) {
+        return {
+          ...prevPage,
+          [categoriaId]: prevPage[categoriaId] - 1,
+        };
+      }
+      return prevPage;
+    });
+  };
 
-const prevPage = (categoriaId) => {
-  setPage((prevPage) => {
-    if (prevPage[categoriaId] > 0) {
-      return {
-        ...prevPage,
-        [categoriaId]: prevPage[categoriaId] - 1
-      };
-    }
-    return prevPage; // não altera se já está na primeira página
-  });
-};
-
+  // **AQUI está o filtro pra mostrar só categorias com livros**
+  const categoriasComLivros = categorias.filter(
+    (categoria) => livros[categoria.id] && livros[categoria.id].length > 0
+  );
 
   return (
-  <>
-    {categorias && categorias.map(categoria => (
-      <div key={categoria.id} className="carousel-wrapper">
-        <h2>{categoria.genero}</h2>
-
-        <div className="carousel-container">
-          <button className="carousel-btn left" onClick={()=>prevPage(categoria.id)}>
-            <ChevronLeft />
-          </button>
-
-          <div className="carousel-track">
-            {livros[categoria.id] && livros[categoria.id].map(livro => (
-                <BookCardCategoria
-                  key={livro.id}
-                  livro={livro}
-                  isFavorito={favoritos.includes(livro.id)}
-                  onToggleFavorito={handleToggleFavorito}
-                  className="item"
-                />
-            ))}
-          </div>
-
-          <button className="carousel-btn right" onClick={()=>nextPage(categoria.id)}>
-            <ChevronRight />
-          </button>
+    <>
+      {/* Mensagem caso não sobre nenhuma categoria para o usuário */}
+      {categoriasComLivros.length === 0 && (
+        <div style={{ textAlign: "center", color: "#888", marginTop: 40 }}>
+          Nenhum livro disponível para sua classificação indicativa.
         </div>
-      </div>
-    ))}
-  </>
-);
+      )}
+      {categoriasComLivros.map((categoria) => (
+        <div key={categoria.id} className="carousel-wrapper">
+          <h2>{categoria.genero}</h2>
+          <div className="carousel-container">
+            <button className="carousel-btn left" onClick={() => prevPage(categoria.id)}>
+              <ChevronLeft />
+            </button>
+            <div className="carousel-track">
+              {livros[categoria.id] &&
+                livros[categoria.id].map((livro) => (
+                  <BookCardCategoria
+                    key={livro.id}
+                    livro={livro}
+                    isFavorito={favoritos.includes(livro.id)}
+                    onToggleFavorito={handleToggleFavorito}
+                    className="item"
+                  />
+                ))}
+            </div>
+            <button className="carousel-btn right" onClick={() => nextPage(categoria.id)}>
+              <ChevronRight />
+            </button>
+          </div>
+        </div>
+      ))}
+    </>
+  );
 }

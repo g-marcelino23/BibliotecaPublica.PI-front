@@ -20,7 +20,8 @@ function CadastroLivro() {
     capa: null,
     caminhoArquivo: '',
     caminhoCapa: '',
-    categoria: ''
+    categoria: '',
+    classificacaoIndicativa: "L"
   };
 
   const inputPdfRef = useRef(null);
@@ -56,7 +57,8 @@ const [categorias, setCategorias] = useState([])
           ...dadosDoServidor,
           id: dadosDoServidor.id,
           pdf: null,
-          capa: null
+          capa: null,
+          classificacaoIndicativa: dadosDoServidor.classificacaoIndicativa || "",
         });
       })
       .catch(error => {
@@ -112,7 +114,8 @@ const [categorias, setCategorias] = useState([])
     formData.append('titulo', objLivro.titulo);
     formData.append('autor', objLivro.autor);
     formData.append('descricao', objLivro.descricao);
-    formData.append('categoria', objLivro.categoria)
+    formData.append('categoria', objLivro.categoria);
+    formData.append('classificacaoIndicativa', objLivro.classificacaoIndicativa);
 
     if (objLivro.pdf instanceof File) {
       formData.append('pdf', objLivro.pdf);
@@ -220,7 +223,25 @@ const [categorias, setCategorias] = useState([])
               ))}
             </select>
         </div>
-        
+
+        <div className="form-grupo">
+          <label htmlFor="classificacaoIndicativa">Classificação Indicativa</label>
+          <select
+            id="classificacaoIndicativa"
+            name="classificacaoIndicativa"
+            value={objLivro.classificacaoIndicativa}
+            onChange={aoDigitar}
+            required
+          >
+            <option value="">Selecione</option>
+            <option value="L">L</option>
+            <option value="DEZ">10</option>
+            <option value="DOZE">12</option>
+            <option value="QUATORZE">14</option>
+            <option value="DEZESSEIS">16</option>
+            <option value="DEZOITO">18</option>
+          </select>
+        </div>
 
         <div className="form-grupo full-width">
           <label htmlFor="autor">Autor</label>
