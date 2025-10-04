@@ -234,7 +234,7 @@ const [categorias, setCategorias] = useState([])
             required
           >
             <option value="">Selecione</option>
-            <option value="L">L</option>
+            <option value="L">LIVRE</option>
             <option value="DEZ">10</option>
             <option value="DOZE">12</option>
             <option value="QUATORZE">14</option>

@@ -3,7 +3,7 @@
 // src/components/ListaLivrosPage.js
 import { useEffect, useState } from "react"
 import api from "../services/api.js"
-import BookCard from "./BookCard"
+import BookCard from "./BookCard.js"
 import { useNavigate } from "react-router-dom"
 import "../styles/BookCard.css"
 import Loading from "../components/Loading.js"
@@ -192,11 +192,25 @@ function ListaLivrosPage() {
     }
   }
 
-  const livrosFiltrados = livros.filter(
-    (livro) =>
-      (livro.titulo && livro.titulo.toLowerCase().includes(busca.toLowerCase())) ||
-      (livro.autor && livro.autor.toLowerCase().includes(busca.toLowerCase())),
-  )
+  const livrosFiltrados = livros.filter((livro) => {
+    const buscaLower = busca.toLowerCase()
+    const tituloMatch = livro.titulo && livro.titulo.toLowerCase().includes(buscaLower)
+    const autorMatch = livro.autor && livro.autor.toLowerCase().includes(buscaLower)
+
+    // Busca por categoria (pode ser objeto ou string)
+    let categoriaMatch = false
+    if (livro.categoria) {
+      if (typeof livro.categoria === "string") {
+        categoriaMatch = livro.categoria.toLowerCase().includes(buscaLower)
+      } else if (livro.categoria.genero) {
+        categoriaMatch = livro.categoria.genero.toLowerCase().includes(buscaLower)
+      } else if (livro.categoria.nome) {
+        categoriaMatch = livro.categoria.nome.toLowerCase().includes(buscaLower)
+      }
+    }
+
+    return tituloMatch || autorMatch || categoriaMatch
+  })
 
   if (loading) return <Loading />
 
@@ -207,7 +221,7 @@ function ListaLivrosPage() {
       <div className="search-container mb-4">
         <input
           type="text"
-          placeholder="Buscar por título ou autor..."
+          placeholder="Buscar por título, autor ou categoria..."
           value={busca}
           onChange={(e) => setBusca(e.target.value)}
           className="form-control search-input"
@@ -233,7 +247,7 @@ function ListaLivrosPage() {
             />
           ))
         ) : (
-          <p className="text-center mt-4">Nenhum livro cadastrado.</p>
+          <p className="text-center mt-4">Nenhum livro encontrado.</p>
         )}
       </div>
     </div>

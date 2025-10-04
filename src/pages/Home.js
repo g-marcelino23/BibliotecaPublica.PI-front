@@ -13,10 +13,9 @@ import {
   FaBook,
   FaBookOpen,
   FaGraduationCap,
-  FaUsers,
 } from "react-icons/fa"
 
-function Home() {
+function HomeOption2() {
   const [isRegistering, setIsRegistering] = useState(false)
   const [loginEmail, setLoginEmail] = useState("")
   const [loginPassword, setLoginPassword] = useState("")
@@ -27,10 +26,7 @@ function Home() {
   const [error, setError] = useState("")
   const [registerDataNascimento, setRegisterDataNascimento] = useState("")
 
-
   const navigate = useNavigate()
-
-  document.title = `Biblioteca Virtual | ${isRegistering ? "Cadastro" : "Login"}`
 
   const handleLogin = async (e) => {
     e.preventDefault()
@@ -45,7 +41,7 @@ function Home() {
       localStorage.setItem("userName", userName)
       navigate("/dashboard")
     } catch (err) {
-      if (err.response && err.response.data && err.response.data.message) {
+      if (err.response?.data?.message) {
         setError(err.response.data.message)
       } else {
         setError("E-mail ou senha inválidos. Tente novamente.")
@@ -62,14 +58,14 @@ function Home() {
         email: registerEmail,
         password: registerPassword,
         role: registerRole,
-        dataNascimento: registerDataNascimento, // <- agora vai junto!
+        dataNascimento: registerDataNascimento,
       })
       const { token, name: userName } = response.data
       localStorage.setItem("token", token)
       localStorage.setItem("userName", userName)
       navigate("/dashboard")
     } catch (err) {
-      if (err.response && err.response.data && err.response.data.message) {
+      if (err.response?.data?.message) {
         setError(err.response.data.message)
       } else {
         setError("Erro ao registrar. Verifique os dados e tente novamente.")
@@ -78,166 +74,220 @@ function Home() {
   }
 
   return (
-    <div className="home-container">
-      <div className="home-content">
-        <div className="video-section">
-          <video className="background-video" autoPlay muted loop playsInline>
-            <source src="/assets/videos/home.mp4" type="video/mp4" />
-            Seu navegador não suporta vídeos HTML5.
-          </video>
+    <div className="home-option2-container">
+      <div className="floating-pages">
+        {[...Array(8)].map((_, i) => (
+          <div key={i} className="page" style={{ animationDelay: `${i * 0.5}s` }} />
+        ))}
+      </div>
 
-          <div className="video-overlay">
-            <div className="brand-content">
-              <div className="library-logo">
-                <FaBookOpen className="logo-icon" />
-                <h1>BiblioTech</h1>
+      <div className="bookshelf-background">
+        <div className="shelf">
+          {[...Array(20)].map((_, i) => (
+            <div key={i} className="book" style={{ animationDelay: `${i * 0.1}s` }} />
+          ))}
+        </div>
+      </div>
+
+      <div className="decorative-circles">
+        <div className="circle circle-1"></div>
+        <div className="circle circle-2"></div>
+        <div className="circle circle-3"></div>
+      </div>
+
+      <div className="home-option2-content">
+        <div className="left-section">
+          <div className="brand-section">
+            <div className="logo-glow">
+              <FaBookOpen className="main-logo" />
+            </div>
+            <h1>BiblioTech</h1>
+            <p className="tagline">Conhecimento ao seu alcance</p>
+
+            <div className="features">
+              <div className="feature-item">
+                <div className="feature-icon">📚</div>
+                <span>Acervo Digital</span>
               </div>
-              <div className="brand-info">
-                <h2>Biblioteca Virtual</h2>
-                <p>
-                  Acesse o maior acervo digital de conhecimento. Explore livros, artigos acadêmicos, pesquisas e
-                  recursos educacionais em um ambiente seguro e organizado.
-                </p>
-                <div className="features-list">
-                  <div className="feature-item">
-                    <FaBook className="feature-icon" />
-                    <span>Acervo Digital</span>
-                  </div>
-                  <div className="feature-item">
-                    <FaGraduationCap className="feature-icon" />
-                    <span>Recursos Acadêmicos</span>
-                  </div>
-                  <div className="feature-item">
-                    <FaUsers className="feature-icon" />
-                    <span>Comunidade Estudantil</span>
-                  </div>
+              <div className="feature-item">
+                <div className="feature-icon">🎯</div>
+                <span>Busca Inteligente</span>
+              </div>
+              <div className="feature-item">
+                <div className="feature-icon">⭐</div>
+                <span>Favoritos</span>
+              </div>
+            </div>
+
+            <div className="stats">
+              <div className="stat-item">
+                <FaBook />
+                <div>
+                  <strong>10.000+</strong>
+                  <span>Livros</span>
+                </div>
+              </div>
+              <div className="stat-item">
+                <FaGraduationCap />
+                <div>
+                  <strong>5.000+</strong>
+                  <span>Estudantes</span>
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="auth-form-section">
-          {!isRegistering ? (
-            <form onSubmit={handleLogin} className="auth-form animate">
-              <div className="form-header">
-                <FaSignInAlt className="form-icon" />
-                <h2>Acesso à Biblioteca</h2>
-                <p>Entre com suas credenciais de estudante</p>
-              </div>
-              <div className="input-group">
-                <FaEnvelope className="input-icon" />
-                <input
-                  type="email"
-                  placeholder="E-mail acadêmico"
-                  value={loginEmail}
-                  onChange={(e) => setLoginEmail(e.target.value)}
-                  required
-                />
-              </div>
-              <div className="input-group">
-                <FaLock className="input-icon" />
-                <input
-                  type="password"
-                  placeholder="Senha"
-                  value={loginPassword}
-                  onChange={(e) => setLoginPassword(e.target.value)}
-                  required
-                />
-              </div>
-              {error && <div className="alert-message error">{error}</div>}
-              <button type="submit" className="btn btn-primary">
-                Acessar Biblioteca
-              </button>
-              <p className="switch-form-text">
-                Novo estudante?{" "}
-                <span
-                  onClick={() => {
-                    setIsRegistering(true)
-                    setError("")
-                  }}
-                  className="link-text"
-                >
-                  Criar conta
-                </span>
-              </p>
-            </form>
-          ) : (
-            <form onSubmit={handleRegister} className="auth-form animate">
-              <div className="form-header">
-                <FaUserPlus className="form-icon" />
-                <h2>Registro Acadêmico</h2>
-                <p>Crie sua conta na biblioteca</p>
-              </div>
-              <div className="input-group">
-                <FaUser className="input-icon" />
-                <input
-                  type="text"
-                  placeholder="Nome completo"
-                  value={registerName}
-                  onChange={(e) => setRegisterName(e.target.value)}
-                  required
-                />
-              </div>
-              <div className="input-group">
-                <FaEnvelope className="input-icon" />
-                <input
-                  type="email"
-                  placeholder="E-mail acadêmico"
-                  value={registerEmail}
-                  onChange={(e) => setRegisterEmail(e.target.value)}
-                  required
-                />
-              </div>
-              <div className="input-group">
-                <FaLock className="input-icon" />
-                <input
-                  type="password"
-                  placeholder="Criar senha"
-                  value={registerPassword}
-                  onChange={(e) => setRegisterPassword(e.target.value)}
-                  required
-                />
-              </div>
-              <div className="input-group">
-                <FaUser className="input-icon" />
-                <input
-                  type="date"
-                  placeholder="Data de nascimento"
-                  value={registerDataNascimento}
-                  onChange={(e) => setRegisterDataNascimento(e.target.value)}
-                  required
-                />
-              </div>
-              <div className="input-group">
-                <FaGraduationCap className="input-icon" />
-                <select value={registerRole} onChange={(e) => setRegisterRole(e.target.value)} required>
-                  <option value="USER">Estudante</option>
-                  <option value="ADMIN">Bibliotecário</option>
-                </select>
-              </div>
-              {error && <div className="alert-message error">{error}</div>}
-              <button type="submit" className="btn btn-success">
-                Criar Conta
-              </button>
-              <p className="switch-form-text">
-                Já possui conta?{" "}
-                <span
-                  onClick={() => {
-                    setIsRegistering(false)
-                    setError("")
-                  }}
-                  className="link-text"
-                >
-                  Fazer login
-                </span>
-              </p>
-            </form>
-          )}
+        <div className="right-section">
+          <div className="form-glass-wrapper">
+            <div className="form-card">
+              {!isRegistering ? (
+                <form onSubmit={handleLogin} className="auth-form-option2">
+                  <div className="form-header">
+                    <div className="form-icon">
+                      <FaSignInAlt />
+                    </div>
+                    <h2>Bem-vindo de volta</h2>
+                    <p className="subtitle">Entre para continuar sua jornada</p>
+                  </div>
+
+                  <div className="form-group">
+                    <label>E-mail</label>
+                    <div className="input-container">
+                      <FaEnvelope />
+                      <input
+                        type="email"
+                        placeholder="seu@email.com"
+                        value={loginEmail}
+                        onChange={(e) => setLoginEmail(e.target.value)}
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div className="form-group">
+                    <label>Senha</label>
+                    <div className="input-container">
+                      <FaLock />
+                      <input
+                        type="password"
+                        placeholder="••••••••"
+                        value={loginPassword}
+                        onChange={(e) => setLoginPassword(e.target.value)}
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  {error && <div className="alert-error">{error}</div>}
+
+                  <button type="submit" className="btn-submit">
+                    <FaSignInAlt /> Entrar
+                  </button>
+
+                  <p className="switch-text">
+                    Não tem uma conta?{" "}
+                    <span onClick={() => setIsRegistering(true)} className="link">
+                      Cadastre-se
+                    </span>
+                  </p>
+                </form>
+              ) : (
+                <form onSubmit={handleRegister} className="auth-form-option2">
+                  <div className="form-header">
+                    <div className="form-icon">
+                      <FaUserPlus />
+                    </div>
+                    <h2>Criar conta</h2>
+                    <p className="subtitle">Junte-se à nossa comunidade</p>
+                  </div>
+
+                  <div className="form-group">
+                    <label>Nome completo</label>
+                    <div className="input-container">
+                      <FaUser />
+                      <input
+                        type="text"
+                        placeholder="Seu nome"
+                        value={registerName}
+                        onChange={(e) => setRegisterName(e.target.value)}
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div className="form-group">
+                    <label>E-mail</label>
+                    <div className="input-container">
+                      <FaEnvelope />
+                      <input
+                        type="email"
+                        placeholder="seu@email.com"
+                        value={registerEmail}
+                        onChange={(e) => setRegisterEmail(e.target.value)}
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div className="form-group">
+                    <label>Senha</label>
+                    <div className="input-container">
+                      <FaLock />
+                      <input
+                        type="password"
+                        placeholder="••••••••"
+                        value={registerPassword}
+                        onChange={(e) => setRegisterPassword(e.target.value)}
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div className="form-group">
+                    <label>Data de nascimento</label>
+                    <div className="input-container">
+                      <FaUser />
+                      <input
+                        type="date"
+                        value={registerDataNascimento}
+                        onChange={(e) => setRegisterDataNascimento(e.target.value)}
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div className="form-group">
+                    <label>Tipo de conta</label>
+                    <div className="input-container">
+                      <FaGraduationCap />
+                      <select value={registerRole} onChange={(e) => setRegisterRole(e.target.value)} required>
+                        <option value="USER">Estudante</option>
+                        <option value="ADMIN">Bibliotecário</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  {error && <div className="alert-error">{error}</div>}
+
+                  <button type="submit" className="btn-submit">
+                    <FaUserPlus /> Criar conta
+                  </button>
+
+                  <p className="switch-text">
+                    Já tem uma conta?{" "}
+                    <span onClick={() => setIsRegistering(false)} className="link">
+                      Entrar
+                    </span>
+                  </p>
+                </form>
+              )}
+            </div>
+          </div>
         </div>
       </div>
     </div>
   )
 }
 
-export default Home
+export default HomeOption2
