@@ -1,15 +1,13 @@
-// src/pages/CadastroLivros.js
 import React, { useEffect, useState, useRef } from 'react';
 import '../styles/CadastroLivros.css';
-import api from '../services/api.js';
+import api from '../services/api.js'; // Este 'api' tem a baseURL: 'http://localhost:8080'
 import apiUsuario from '../services/usuarioApi.js';
 import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
 
 function CadastroLivro() {
   const { livroId } = useParams();
   const navigate = useNavigate();
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem('token'); // Já sabemos que a chave é 'token'
 
   const initialStateLivro = {
     id: null,
@@ -30,10 +28,9 @@ function CadastroLivro() {
   const [isEditMode, setIsEditMode] = useState(false);
   const [feedback, setFeedback] = useState({ message: '', type: '' });
 
-const [categorias, setCategorias] = useState([])
+  const [categorias, setCategorias] = useState([]);
+  const [autores, setAutores] = useState([]);
 
-
-  // NOVA FUNÇÃO APENAS PARA LIMPAR OS CAMPOS
   const limparFormulario = () => {
     setObjLivro(initialStateLivro);
     if (inputPdfRef.current) inputPdfRef.current.value = '';
@@ -47,7 +44,9 @@ const [categorias, setCategorias] = useState([])
         setFeedback({ message: "Token não encontrado. Faça login para editar.", type: "error" });
         return;
       }
-      api.get(`/byId/${livroId}`, {
+      
+      // --- CORREÇÃO 1: Adicionado /api/livro ---
+      api.get(`/api/livro/byId/${livroId}`, {
         headers: { Authorization: `Bearer ${token}` }
       })
       .then(response => {
@@ -56,6 +55,8 @@ const [categorias, setCategorias] = useState([])
           ...initialStateLivro,
           ...dadosDoServidor,
           id: dadosDoServidor.id,
+          autor: dadosDoServidor.autor ? dadosDoServidor.autor.nome : '',
+          categoria: dadosDoServidor.categoria ? dadosDoServidor.categoria.genero : '',
           pdf: null,
           capa: null,
           classificacaoIndicativa: dadosDoServidor.classificacaoIndicativa || "",
@@ -71,29 +72,52 @@ const [categorias, setCategorias] = useState([])
     }
   }, [livroId, token]);
 
-
   useEffect(() => {
-  const carregarCategorias = async ()=> {
-    try {
-      const resposta = await apiUsuario.get("/categoria");
-      setCategorias(resposta.data);
-    } catch(err) {
-      console.log(err.message);
-    }
-  };
-  carregarCategorias();
-}, []);
+    const carregarAutores = async () => {
+      try {
+        // Esta chamada usa 'fetch' e já está correta (usa a URL completa)
+        const response = await fetch('http://localhost:8080/api/autor', {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        if (!response.ok) {
+          throw new Error('Erro ao buscar autores da API');
+        }
+        const data = await response.json();
+        setAutores(data);
+      } catch (err) {
+        console.error(err.message);
+      }
+    };
+    
+    const carregarCategorias = async () => {
+      try {
+        // Esta chamada usa 'apiUsuario', que deve ter a baseURL correta para categorias
+        const resposta = await apiUsuario.get("/categoria", {
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
+        setCategorias(resposta.data);
+      } catch (err) {
+        console.log(err.message);
+      }
+    };
 
-  // FUNÇÃO ATUALIZADA
+    if (token) {
+      carregarAutores();
+      carregarCategorias();
+    }
+  }, [token]);
+
   const limparFormularioENavegar = (navegar = true) => {
-    limparFormulario(); // Reutiliza a nova função
+    limparFormulario();
     setIsEditMode(false);
     setFeedback({ message: '', type: '' });
     if (navegar) {
       navigate('/lista-livros');
     }
     if (livroId && !navegar) {
-        navigate('/cadastrar');
+      navigate('/cadastro-livros');
     }
   };
 
@@ -131,23 +155,25 @@ const [categorias, setCategorias] = useState([])
       return;
     }
     
+    // Config do Axios. O 'api.js' já cuida do 'Authorization' e 'Content-Type'
+    // mas vamos manter o 'Authorization' explícito por segurança.
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
-        'Content-Type': 'multipart/form-data',
       }
     };
 
     try {
       if (isEditMode) {
-        await api.put(`/alterar/${objLivro.id}`, formData, config);
+        // --- CORREÇÃO 2: Adicionado /api/livro ---
+        await api.put(`/api/livro/alterar/${objLivro.id}`, formData, config);
         setFeedback({ message: 'Livro alterado com sucesso!', type: 'success' });
         setTimeout(() => limparFormularioENavegar(true), 1500);
       } else {
-        // LÓGICA DE CADASTRO ATUALIZADA
-        await api.post("/cadastrar", formData, config);
+        // --- CORREÇÃO 3: Adicionado /api/livro ---
+        await api.post("/api/livro/cadastrar", formData, config);
         setFeedback({ message: 'Livro cadastrado com sucesso!', type: 'success' });
-        limparFormulario(); // Apenas limpa o formulário, mantendo a mensagem
+        limparFormulario();
       }
     } catch (error) {
       console.error("Erro ao salvar livro:", error.response ? error.response.data : error.message);
@@ -156,7 +182,6 @@ const [categorias, setCategorias] = useState([])
   };
 
   const excluirLivro = async () => {
-    // ... (lógica de exclusão permanece a mesma)
     if (!objLivro.id) return;
     if (window.confirm(`Tem certeza que deseja excluir o livro "${objLivro.titulo}"?`)) {
       try {
@@ -164,7 +189,8 @@ const [categorias, setCategorias] = useState([])
           setFeedback({ message: "Operação não permitida. Faça login.", type: "error" });
           return;
         }
-        await api.delete(`/deletar/${objLivro.id}`, {
+        // --- CORREÇÃO 4: Adicionado /api/livro ---
+        await api.delete(`/api/livro/deletar/${objLivro.id}`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         setFeedback({ message: "Livro excluído com sucesso!", type: 'success' });
@@ -189,10 +215,9 @@ const [categorias, setCategorias] = useState([])
     }
   };
 
-  // O JSX do formulário continua o mesmo
   return (
+    // ... (SEU JSX CONTINUA O MESMO) ...
     <div className="cadastro-livro-container">
-      {/* ... (todo o seu JSX do return permanece igual) ... */}
       <h2 className="cadastro-titulo">
         {isEditMode ? `Editando Livro` : "Cadastrar Novo Livro"}
       </h2>
@@ -211,16 +236,15 @@ const [categorias, setCategorias] = useState([])
 
         <div className='form-grupo'>
           <label htmlFor="categorias">Categorias</label>
-            {/* <select id='categorias' value={objLivro.categoria} onChange={(e) => setObjLivro({...objLivro, categoria: e.target.value})}> */}
-
             <select
               id="categorias"
+              name="categoria"
               value={objLivro.categoria}
-              onChange={(e) =>
-                setObjLivro({ ...objLivro, categoria: e.target.value })}
+              onChange={aoDigitar}
+              required
               >
              <option value="">Selecione uma categoria</option> {categorias.map((cat) => ( <option key={cat} value={cat}> {cat} </option>
-              ))}
+             ))}
             </select>
         </div>
 
@@ -245,7 +269,20 @@ const [categorias, setCategorias] = useState([])
 
         <div className="form-grupo full-width">
           <label htmlFor="autor">Autor</label>
-          <input id="autor" type="text" name="autor" value={objLivro.autor} onChange={aoDigitar} required />
+          <select
+            id="autor"
+            name="autor"
+            value={objLivro.autor}
+            onChange={aoDigitar}
+            required
+          >
+            <option value="">Selecione um autor</option>
+            {autores.map((autor) => (
+              <option key={autor.id} value={autor.nome}>
+                {autor.nome}
+              </option>
+            ))}
+          </select>
         </div>
 
         <div className="form-grupo full-width">

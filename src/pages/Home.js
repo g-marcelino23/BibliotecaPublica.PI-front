@@ -36,9 +36,16 @@ function HomeOption2() {
         email: loginEmail,
         password: loginPassword,
       })
-      const { token, name: userName } = response.data
+
+      // --- CORREÇÃO AQUI ---
+      // 1. Capture o 'role' (cargo) da resposta do backend.
+      const { token, name: userName, role } = response.data 
+      
+      // 2. Salve o token, o nome E o cargo no localStorage.
       localStorage.setItem("token", token)
       localStorage.setItem("userName", userName)
+      localStorage.setItem("userRole", role) // <-- ESTA LINHA É NOVA
+
       navigate("/dashboard")
     } catch (err) {
       if (err.response?.data?.message) {
@@ -60,9 +67,16 @@ function HomeOption2() {
         role: registerRole,
         dataNascimento: registerDataNascimento,
       })
-      const { token, name: userName } = response.data
+      
+      // --- CORREÇÃO AQUI ---
+      // 1. Capture o 'role' (cargo) da resposta do backend.
+      const { token, name: userName, role } = response.data
+
+      // 2. Salve o token, o nome E o cargo no localStorage.
       localStorage.setItem("token", token)
       localStorage.setItem("userName", userName)
+      localStorage.setItem("userRole", role) // <-- ESTA LINHA É NOVA
+
       navigate("/dashboard")
     } catch (err) {
       if (err.response?.data?.message) {
@@ -75,6 +89,7 @@ function HomeOption2() {
 
   return (
     <div className="home-option2-container">
+      {/* ... (o resto do seu JSX continua igual aqui) ... */}
       <div className="floating-pages">
         {[...Array(8)].map((_, i) => (
           <div key={i} className="page" style={{ animationDelay: `${i * 0.5}s` }} />

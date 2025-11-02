@@ -14,6 +14,8 @@ import {
   faChevronLeft,
   faHeart,
   faList,
+  faUserEdit,
+  faUsers 
 } from "@fortawesome/free-solid-svg-icons"
 
 const SidebarOption3 = ({ decoded }) => {
@@ -69,14 +71,34 @@ const SidebarOption3 = ({ decoded }) => {
             <span className="link-text-opt3">Categorias</span>
           </div>
         </NavLink>
+        
+        {/* Este link ainda não tem uma rota no App.js */}
+        <NavLink to="/autores" className="nav-link-opt3" data-text="Autores">
+          <div className="link-content">
+            <FontAwesomeIcon icon={faUsers} className="nav-icon-opt3" />
+            <span className="link-text-opt3">Autores</span>
+          </div>
+        </NavLink>
 
+        {/* SEÇÃO DO ADMIN */}
         {decoded && decoded.role === "ROLE_ADMIN" && (
           <>
             <div className="nav-divider"></div>
-            <NavLink to="/cadastro-livros" className="nav-link-opt3 admin-link-opt3" data-text="Cadastrar">
+            <NavLink to="/cadastro-livros" className="nav-link-opt3 admin-link-opt3" data-text="Cadastrar Livro">
               <div className="link-content">
                 <FontAwesomeIcon icon={faPlus} className="nav-icon-opt3" />
                 <span className="link-text-opt3">Cadastrar Livro</span>
+              </div>
+              <span className="admin-badge">ADMIN</span>
+            </NavLink>
+            
+            {/* AQUI ESTAVA O ERRO: O link era "/gerenciar-autores"
+              CORRIGIDO para "/admin/autores" (igual ao App.js)
+            */}
+            <NavLink to="/admin/autores" className="nav-link-opt3 admin-link-opt3" data-text="Gerenciar Autores">
+              <div className="link-content">
+                <FontAwesomeIcon icon={faUserEdit} className="nav-icon-opt3" />
+                <span className="link-text-opt3">Gerenciar Autores</span>
               </div>
               <span className="admin-badge">ADMIN</span>
             </NavLink>

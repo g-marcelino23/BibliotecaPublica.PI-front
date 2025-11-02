@@ -1,5 +1,7 @@
 "use client"
 import { useState, useEffect } from "react"
+// O 'Link' só é usado se você tiver outras rotas internas, mas não é usado para o download.
+import { Link } from "react-router-dom"; 
 import { FaStar, FaDownload, FaEdit, FaTrash } from "react-icons/fa"
 import { jwtDecode } from "jwt-decode"
 import "../styles/BookCard.css"
@@ -82,19 +84,23 @@ const BookCard = ({ livro, onEdit, onDelete, isFavorito, onToggleFavorito }) => 
           </span>
         )}
         <h3 className="book-card-title-dark">{livro.titulo}</h3>
-        <p className="book-card-author-dark">{livro.autor}</p>
+        <p className="book-card-author-dark">{livro.autor?.nome}</p>
         <p className="book-card-description-dark">{livro.descricao || "Sem descrição."}</p>
 
-        {livro.caminhoArquivo && (
+        {/* --- INÍCIO DA CORREÇÃO --- */}
+        {/* Trocamos <Link> por <a> */}
+        {/* Trocamos 'to' por 'href' e apontamos para a API de download */
+        livro.caminhoArquivo && (
           <a
             href={`http://localhost:8080/api/livro/download/${encodeURIComponent(livro.titulo)}`}
             target="_blank"
             rel="noopener noreferrer"
             className="book-card-download-dark"
           >
-            <FaDownload /> Baixar PDF
+            <FaDownload /> Ler Livro
           </a>
         )}
+        {/* --- FIM DA CORREÇÃO --- */}
       </div>
 
       {decoded && decoded.role === "ROLE_ADMIN" && (

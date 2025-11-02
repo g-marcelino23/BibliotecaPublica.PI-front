@@ -1,31 +1,31 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Layout from './components/Layout';
+import FavoritosPage from './pages/FavoritosPage'; 
 
-// Importe o novo componente de Layout
-import Layout from './components/Layout'; 
-import FavoritosPage from './pages/FavoritosPage'; // A importação já estava aqui, ótimo!
-
-// Importe suas páginas
 import Home from './pages/Home';
 import CadastroUsuario from './pages/CadastroUsuario';
 import LoginUsuario from './pages/LoginUsuario';
 import Dashboard from './pages/Dashboard';
 import ListaLivrosPage from './pages/ListaLivrosPage';
 import CadastroLivros from './pages/CadastroLivros';
-import Perfil from './pages/Perfil'; 
-import CategoriasPage from './pages/CategoriasPage'
+import Perfil from './pages/Perfil';
+import CategoriasPage from './pages/CategoriasPage';
+import GerenciarAutores from './pages/GerenciarAutores';
+import AutoresListPage from './pages/AutoresListPage';
+import AutorDetailPage from './pages/AutorDetailPage';
+
 
 function App() {
   return (
     <Router>
       <Routes>
         {/* --- ROTAS PÚBLICAS (Sem Sidebar) --- */}
-        {/* Estas rotas não são envolvidas pelo Layout */}
         <Route path="/" element={<Home />} />
         <Route path="/login-usuario" element={<LoginUsuario />} />
         <Route path="/cadastro-usuario" element={<CadastroUsuario />} />
         
         {/* --- ROTAS PRIVADAS (Com Sidebar) --- */}
-        {/* Todas as rotas aqui dentro terão a sidebar e o dark mode automaticamente */}
+        {/* (Assumindo que seu <Layout> ou outro wrapper cuida da proteção) */}
         <Route 
           path="/dashboard" 
           element={<Layout><Dashboard /></Layout>} 
@@ -40,14 +40,13 @@ function App() {
         />
         <Route 
           path="/editar/:livroId" 
-          element={<Layout><CadastroLivros /></Layout>} // Envolvi esta rota no Layout também para consistência
+          element={<Layout><CadastroLivros /></Layout>}
         />
         <Route 
           path="/perfil" 
           element={<Layout><Perfil /></Layout>} 
         /> 
         
-        {/* ROTA DE FAVORITOS ADICIONADA AQUI, DENTRO DO LAYOUT */}
         <Route 
           path="/favoritos" 
           element={<Layout><FavoritosPage /></Layout>} 
@@ -56,6 +55,22 @@ function App() {
         <Route 
           path="/categorias" 
           element={<Layout><CategoriasPage/></Layout>} 
+        />
+
+        {/* Rota de Admin (Passo 1) */}
+        <Route 
+          path="/admin/autores" 
+          element={<Layout><GerenciarAutores /></Layout>}
+        />
+        
+        {/* --- ROTAS DO PASSO 2 (NOVAS) --- */}
+        <Route 
+          path="/autores" 
+          element={<Layout><AutoresListPage /></Layout>}
+        />
+        <Route 
+          path="/autores/:id" 
+          element={<Layout><AutorDetailPage /></Layout>}
         />
         
       </Routes>
