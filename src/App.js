@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Layout from './components/Layout';
 import FavoritosPage from './pages/FavoritosPage'; 
-
+import AccessibilityControls from './components/AccessibilityControls';
 import Home from './pages/Home';
 import CadastroUsuario from './pages/CadastroUsuario';
 import LoginUsuario from './pages/LoginUsuario';
@@ -14,18 +14,19 @@ import GerenciarAutores from './pages/GerenciarAutores';
 import AutoresListPage from './pages/AutoresListPage';
 import AutorDetailPage from './pages/AutorDetailPage';
 
-
 function App() {
   return (
     <Router>
+      {/* COMPONENTE DE ACESSIBILIDADE GLOBAL */}
+      <AccessibilityControls />
+
       <Routes>
         {/* --- ROTAS PÚBLICAS (Sem Sidebar) --- */}
         <Route path="/" element={<Home />} />
         <Route path="/login-usuario" element={<LoginUsuario />} />
         <Route path="/cadastro-usuario" element={<CadastroUsuario />} />
-        
+
         {/* --- ROTAS PRIVADAS (Com Sidebar) --- */}
-        {/* (Assumindo que seu <Layout> ou outro wrapper cuida da proteção) */}
         <Route 
           path="/dashboard" 
           element={<Layout><Dashboard /></Layout>} 
@@ -46,7 +47,7 @@ function App() {
           path="/perfil" 
           element={<Layout><Perfil /></Layout>} 
         /> 
-        
+
         <Route 
           path="/favoritos" 
           element={<Layout><FavoritosPage /></Layout>} 
@@ -62,7 +63,7 @@ function App() {
           path="/admin/autores" 
           element={<Layout><GerenciarAutores /></Layout>}
         />
-        
+
         {/* --- ROTAS DO PASSO 2 (NOVAS) --- */}
         <Route 
           path="/autores" 
@@ -72,7 +73,7 @@ function App() {
           path="/autores/:id" 
           element={<Layout><AutorDetailPage /></Layout>}
         />
-        
+
       </Routes>
     </Router>
   );

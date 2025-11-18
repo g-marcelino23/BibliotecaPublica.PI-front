@@ -18,7 +18,7 @@ function FavoritosPage() {
     }
     try {
       setLoading(true);
-      const response = await api.get('/favoritos', {
+      const response = await api.get('/api/livro/favoritos', {
         headers: { Authorization: `Bearer ${token}` }
       });
       setFavoritos(response.data);
@@ -39,7 +39,7 @@ function FavoritosPage() {
     try {
       // --- CORREÇÃO APLICADA AQUI ---
       // Removido o "/api/" do início para não duplicar a URL
-      await api.delete(`/favoritos/${livroId}`, {
+      await api.delete(`/api/livro/favoritos/${livroId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
     } catch (error) {
