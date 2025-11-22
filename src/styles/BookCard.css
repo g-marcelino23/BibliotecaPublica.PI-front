@@ -227,3 +227,67 @@
   gap: 20px;
   padding: 20px;
 }
+
+.external-books-wrapper {
+  position: relative;
+  width: 100vw;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  background: rgba(0, 0, 0, 0.02);
+  padding: 20px 0;
+}
+
+.external-books-container {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  padding: 0 20px;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+}
+
+.external-book-card {
+  flex: 0 0 450px;
+  scroll-snap-align: start;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+  background: white;
+}
+
+.external-book-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.external-book-card .btn-primary {
+  background-color: #FF9900;
+  border-color: #FF9900;
+}
+
+.external-book-card .btn-primary:hover {
+  background-color: #e88b00;
+  border-color: #e88b00;
+}
+
+/* Barra de scroll estilizada */
+.external-books-container::-webkit-scrollbar {
+  height: 10px;
+}
+
+.external-books-container::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+
+.external-books-container::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #4a90e2 0%, #7877c6 100%);
+  border-radius: 10px;
+}
+
+.external-books-container::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #357abd 0%, #5f5ea0 100%);
+}
