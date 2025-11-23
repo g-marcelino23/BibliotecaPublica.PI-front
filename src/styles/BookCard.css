@@ -1,3 +1,13 @@
+/* --- ESTILOS DOS LIVROS INTERNOS --- */
+
+.book-list-container {
+  display: grid;
+  /* AUMENTEI AQUI: De 220px para 300px. Isso faz o card ficar MAIOR (mais largo) */
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 30px; /* Um pouco mais de espaço entre eles */
+  padding: 20px;
+}
+
 .book-card-dark {
   position: relative;
   background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
@@ -6,6 +16,12 @@
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  
+  /* Flexbox para alinhar conteúdo verticalmente */
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 500px; /* Garante uma altura mínima para o card não ficar achatado */
 }
 
 .book-card-dark::before {
@@ -35,15 +51,21 @@
 .book-card-cover-wrapper {
   position: relative;
   width: 100%;
-  height: 280px;
+  height: 280px; /* Altura generosa para a capa */
   overflow: hidden;
-  background: linear-gradient(135deg, #0f0f1e 0%, #1a1a2e 100%);
+  background: #0f0f1e; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .book-card-cover-dark {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  /* Isso conserta a imagem feia/esticada */
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain; 
   transition: transform 0.4s ease;
 }
 
@@ -61,6 +83,8 @@
   justify-content: space-between;
   align-items: flex-start;
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7) 0%, transparent 100%);
+  width: 100%;
+  z-index: 2;
 }
 
 .book-card-badge-dark {
@@ -95,19 +119,17 @@
 }
 
 @keyframes pulse {
-  0%,
-  100% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.1);
-  }
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
 }
 
 .book-card-content-dark {
   padding: 20px;
   position: relative;
   z-index: 1;
+  flex-grow: 1; /* Ocupa o espaço restante */
+  display: flex;
+  flex-direction: column;
 }
 
 .book-card-category-dark {
@@ -122,12 +144,13 @@
   text-transform: uppercase;
   letter-spacing: 1px;
   margin-bottom: 12px;
+  align-self: flex-start;
 }
 
 .book-card-title-dark {
   margin: 0 0 8px 0;
   color: #ffffff;
-  font-size: 1.3em;
+  font-size: 1.4em; /* Fonte um pouco maior */
   font-weight: 700;
   line-height: 1.3;
   display: -webkit-box;
@@ -139,41 +162,45 @@
 .book-card-author-dark {
   margin: 0 0 12px 0;
   color: rgba(255, 255, 255, 0.6);
-  font-size: 0.9em;
+  font-size: 0.95em;
   font-weight: 500;
 }
 
 .book-card-description-dark {
   margin: 12px 0;
   color: rgba(255, 255, 255, 0.7);
-  font-size: 0.85em;
+  font-size: 0.9em;
   line-height: 1.6;
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  margin-bottom: auto; /* Empurra o botão de download */
 }
 
 .book-card-download-dark {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
-  margin-top: 12px;
-  padding: 8px 16px;
+  margin-top: 20px;
+  padding: 12px 16px;
   background: linear-gradient(135deg, rgba(74, 144, 226, 0.2) 0%, rgba(120, 119, 198, 0.2) 100%);
   border: 1px solid rgba(74, 144, 226, 0.3);
   border-radius: 8px;
   color: #4a90e2;
   text-decoration: none;
-  font-size: 0.85em;
+  font-size: 0.95em;
   font-weight: 600;
   transition: all 0.3s ease;
+  width: 100%;
 }
 
 .book-card-download-dark:hover {
   background: linear-gradient(135deg, rgba(74, 144, 226, 0.3) 0%, rgba(120, 119, 198, 0.3) 100%);
   border-color: rgba(74, 144, 226, 0.5);
   transform: translateX(4px);
+  color: #fff;
 }
 
 .book-card-actions-dark {
@@ -181,7 +208,8 @@
   gap: 10px;
   padding: 16px 20px;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
-  background: rgba(0, 0, 0, 0.2);
+  background: rgba(0, 0, 0, 0.3);
+  margin-top: auto;
 }
 
 .book-card-btn-dark {
@@ -197,11 +225,11 @@
   font-size: 0.85em;
   font-weight: 600;
   transition: all 0.3s ease;
+  color: white;
 }
 
 .book-card-btn-dark.edit {
   background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
-  color: white;
 }
 
 .book-card-btn-dark.edit:hover {
@@ -212,7 +240,6 @@
 
 .book-card-btn-dark.delete {
   background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
-  color: white;
 }
 
 .book-card-btn-dark.delete:hover {
@@ -221,73 +248,93 @@
   box-shadow: 0 4px 12px rgba(231, 76, 60, 0.4);
 }
 
-.book-list-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 20px;
-  padding: 20px;
-}
-
+/* --- ESTILOS DOS LIVROS EXTERNOS --- */
 .external-books-wrapper {
-  position: relative;
-  width: 100vw;
-  left: 50%;
-  right: 50%;
-  margin-left: -50vw;
-  margin-right: -50vw;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  background: rgba(0, 0, 0, 0.02);
   padding: 20px 0;
+  width: 100%;
 }
 
 .external-books-container {
   display: flex;
+  flex-wrap: wrap; 
+  justify-content: center;
   gap: 20px;
-  overflow-x: auto;
-  padding: 0 20px;
-  scroll-snap-type: x mandatory;
-  scroll-behavior: smooth;
+  padding: 10px;
 }
 
 .external-book-card {
-  flex: 0 0 450px;
-  scroll-snap-align: start;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s, box-shadow 0.2s;
-  background: white;
+  width: 240px; 
+  flex: 0 0 auto; 
+  background: #fff;
+  border-radius: 12px;
+  padding: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: auto;
+  min-height: 380px; 
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border: 1px solid #e0e0e0;
 }
 
 .external-book-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
-.external-book-card .btn-primary {
+.external-card-img-wrapper {
+  text-align: center;
+  margin-bottom: 15px;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.external-card-img-wrapper img {
+  max-height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+.external-card-content h5 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 8px;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.external-card-content p {
+  font-size: 0.85rem;
+  color: #666;
+  margin-bottom: 4px;
+}
+
+.btn-amazon {
+  display: block;
+  width: 100%;
   background-color: #FF9900;
-  border-color: #FF9900;
+  color: white;
+  text-align: center;
+  padding: 10px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 0.9rem;
+  margin-top: 15px; 
+  transition: background-color 0.2s;
 }
 
-.external-book-card .btn-primary:hover {
-  background-color: #e88b00;
-  border-color: #e88b00;
-}
-
-/* Barra de scroll estilizada */
-.external-books-container::-webkit-scrollbar {
-  height: 10px;
-}
-
-.external-books-container::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 10px;
-}
-
-.external-books-container::-webkit-scrollbar-thumb {
-  background: linear-gradient(135deg, #4a90e2 0%, #7877c6 100%);
-  border-radius: 10px;
-}
-
-.external-books-container::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(135deg, #357abd 0%, #5f5ea0 100%);
+.btn-amazon:hover {
+  background-color: #e38800;
+  color: white;
 }
