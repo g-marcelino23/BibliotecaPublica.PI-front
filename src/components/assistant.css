@@ -1,0 +1,183 @@
+/* assistant.css */
+
+/* Botão flutuante (canto inferior direito) */
+.assistant-fab {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 52px;
+  height: 52px;
+  border-radius: 999px;
+  border: none;
+  background: #111827;
+  color: #f9fafb;
+  font-size: 26px;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+}
+
+/* Painel lateral, colado à borda direita e embaixo, estilo Notion */
+.assistant-panel {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: 420px;
+  max-height: 80vh;
+  background: #050816;
+  color: #f9fafb;
+  border-radius: 18px 0 0 0;
+  box-shadow: 0 -8px 40px rgba(0, 0, 0, 0.7);
+  display: flex;
+  flex-direction: column;
+  z-index: 9998;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+/* Cabeçalho */
+.assistant-header {
+  padding: 12px 16px;
+  border-bottom: 1px solid #1f2933;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.assistant-title {
+  display: flex;
+  flex-direction: column;
+}
+
+.assistant-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: #e5e7eb;
+}
+
+.assistant-close {
+  background: transparent;
+  border: none;
+  color: #9ca3af;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* Área de mensagens */
+.assistant-messages {
+  padding: 14px 16px;
+  overflow-y: auto;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Tela de boas-vindas */
+.assistant-welcome {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 40px 20px;
+  gap: 16px;
+}
+
+.welcome-icon {
+  font-size: 48px;
+  margin-bottom: 8px;
+}
+
+.assistant-welcome h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #e5e7eb;
+  margin: 0;
+}
+
+.welcome-suggestions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  margin-top: 12px;
+}
+
+.welcome-suggestions button {
+  background: #111827;
+  border: 1px solid #1f2933;
+  color: #e5e7eb;
+  padding: 10px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 13px;
+  text-align: left;
+  transition: all 0.2s;
+}
+
+.welcome-suggestions button:hover {
+  background: #1f2937;
+  border-color: #2563eb;
+}
+
+/* Balões */
+.msg {
+  max-width: 80%;
+  padding: 8px 11px;
+  border-radius: 12px;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.msg-user {
+  background: #2563eb;
+  color: #eff6ff;
+  align-self: flex-end;
+}
+
+.msg-assistant {
+  background: #111827;
+  color: #e5e7eb;
+  align-self: flex-start;
+}
+
+/* Área de input */
+.assistant-input {
+  display: flex;
+  gap: 8px;
+  padding: 10px 12px 12px;
+  border-top: 1px solid #1f2933;
+}
+
+.assistant-input input {
+  flex: 1;
+  background: #050816;
+  border: 1px solid #1f2933;
+  border-radius: 999px;
+  padding: 9px 13px;
+  color: #e5e7eb;
+  font-size: 14px;
+}
+
+.assistant-input input::placeholder {
+  color: #6b7280;
+}
+
+.assistant-input input:focus {
+  outline: none;
+  border-color: #2563eb;
+}
+
+.assistant-input button {
+  border-radius: 999px;
+  border: none;
+  padding: 0 14px;
+  background: #2563eb;
+  color: #fff;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.assistant-input button:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
